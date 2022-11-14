@@ -5,8 +5,8 @@ resource "azurerm_virtual_desktop_workspace" "avd-workspaces" {
   for_each = { for workspace in var.avd-workspaces : workspace.name => workspace }
 
   name                = "${azurerm_resource_group.avd.name}-${each.key}"
-  resource_group_name = azurerm_resource_group.avd[each.key].name
-  location            = azurerm_resource_group.avd[each.key].location
+  resource_group_name = azurerm_resource_group.avd[each.value].name
+  location            = azurerm_resource_group.avd[each.value].location
   friendly_name       = each.value.friendly_name
   tags                = each.value.tags
 }
