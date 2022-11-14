@@ -85,6 +85,7 @@ variable "avd-application_groups" {
     default_desktop_display_name = optional(string)
     tags                         = optional(map(string))
   }))
+  default = null
 }
 
 
@@ -105,6 +106,7 @@ variable "avd-applications" {
     icon_path                    = optional(string)
     icon_index                   = optional(string)
   }))
+  default = null
 }
 
 
@@ -165,12 +167,12 @@ variable "avd-session-hosts" {
       lun                  = number
       caching              = optional(string, "None")
     })))
-    aadds_domain_name              = string
-    aadds_avd_ou_path              = string
-    azuread_user_dc_admin_upn      = string
-    azuread_user_dc_admin_password = string
+    aadds_domain_name                         = string
+    aadds_avd_ou_path                         = string
+    azuread_user_dc_admin_upn                 = string
+    azuread_user_dc_admin_password            = string
     avd_session_host_registration_modules_url = string
-    host_pool_name = string
+    host_pool_name                            = string
   }))
 }
 
