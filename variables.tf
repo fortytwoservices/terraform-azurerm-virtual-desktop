@@ -88,9 +88,9 @@ variable "avd-application_groups" {
 }
 
 
-################################################
-##  Input Variables - AVD Application Groups  ##
-################################################
+##########################################
+##  Input Variables - AVD Applications  ##
+##########################################
 variable "avd-applications" {
   description = "A list of objects with one object per application. See documentation below for values and examples."
   type = list(object({
