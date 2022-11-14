@@ -117,7 +117,6 @@ variable "avd-shared-image-gallery" {
   description = "An object describing a Shared Image Gallery resource, if it should be deployed."
   type = list(object({
     name                = string
-    resource_group_name = string
     description         = optional(string)
     tags                = optional(map(string))
   }))
