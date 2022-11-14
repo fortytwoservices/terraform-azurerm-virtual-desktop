@@ -85,7 +85,7 @@ variable "avd-application_groups" {
     default_desktop_display_name = optional(string)
     tags                         = optional(map(string))
   }))
-  default = null
+  default = []
 }
 
 
@@ -106,7 +106,7 @@ variable "avd-applications" {
     icon_path                    = optional(string)
     icon_index                   = optional(string)
   }))
-  default = null
+  default = []
 }
 
 
