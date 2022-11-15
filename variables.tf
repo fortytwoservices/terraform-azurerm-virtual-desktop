@@ -143,11 +143,11 @@ variable "avd-session-hosts" {
       sku       = string
       version   = string
     }))
-    plan = object({
+    plan = optional(object({
       name      = string
       product   = string
       publisher = string
-    })
+    }))
     os_disk = object({
       name                 = optional(string)
       caching              = string
