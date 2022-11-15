@@ -41,7 +41,7 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
   tags                             = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
 
   dynamic "scheduled_agent_updates" {
-    for_each = { for scheduled in each.value.scheduled_agent_updates : scheduled.timezone => schedule }
+    for_each = { for scheduled in each.value.scheduled_agent_updates : scheduled.timezone => scheduled }
     iterator = scheduled
 
     content {
