@@ -26,8 +26,8 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
   for_each = { for host_pool in var.avd-host_pools : host_pool.name => host_pool }
 
   name                             = "${local.prefix}-${each.key}"
-  resource_group_name              = azurerm_resource_group.avd[each.key].name
-  location                         = azurerm_resource_group.avd[each.key].location
+  resource_group_name              = azurerm_resource_group.avd[each.value.workspace_name].name
+  location                         = azurerm_resource_group.avd[each.value.workspace_name].location
   friendly_name                    = lookup(each.value, "friendly_name", null)
   description                      = lookup(each.value, "description", null)
   type                             = each.value.type
@@ -41,7 +41,7 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
   tags                             = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
 
   dynamic "scheduled_agent_updates" {
-    for_each = { for scheduled in each.value.scheduled_agent_updates : scheduled.timezone => scheduled }
+    for_each = try(each.value.scheduled_agent_updates, null) != null ? each.value.scheduled_agent_updates : []
     iterator = scheduled
 
     content {
@@ -78,8 +78,8 @@ resource "azurerm_virtual_desktop_application_group" "avd-application_groups" {
   name                = "${local.prefix}-${each.key}"
   friendly_name       = lookup(each.value, "friendly_name", null)
   description         = lookup(each.value, "description", null)
-  resource_group_name = azurerm_resource_group.avd[each.value.host_pool_name].name
-  location            = azurerm_resource_group.avd[each.value.host_pool_name].location
+  resource_group_name = azurerm_resource_group.avd[each.value.workspace_name].name
+  location            = azurerm_resource_group.avd[each.value.workspace_name].location
   type                = each.value.type
   host_pool_id        = azurerm_virtual_desktop_host_pool.avd-host_pools[each.value.host_pool_name].id
   tags                = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
@@ -110,7 +110,7 @@ resource "azurerm_virtual_desktop_application" "avd-applications" {
 ##################################
 resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
   for_each            = { for sig in var.avd-shared-image-gallery : sig.name => sig }
-  name                = "${local.prefix}-${each.key}"
+  name                = trim("${local.prefix}-${each.key}", "-")
   description         = lookup(each.value, "description", null)
   resource_group_name = azurerm_resource_group.avd-shared_image_galleries[each.key].name
   location            = azurerm_resource_group.avd-shared_image_galleries[each.key].location

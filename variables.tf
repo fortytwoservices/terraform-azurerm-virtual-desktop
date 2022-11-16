@@ -46,6 +46,7 @@ variable "avd-host_pools" {
     friendly_name                    = optional(string)
     description                      = optional(string)
     location                         = string
+    workspace_name                   = string
     type                             = optional(string, "Pooled")
     load_balancer_type               = optional(string, "DepthFirst")
     validate_environment             = optional(bool, false)
@@ -116,9 +117,9 @@ variable "avd-applications" {
 variable "avd-shared-image-gallery" {
   description = "An object describing a Shared Image Gallery resource, if it should be deployed."
   type = list(object({
-    name                = string
-    description         = optional(string)
-    tags                = optional(map(string))
+    name        = string
+    description = optional(string)
+    tags        = optional(map(string))
   }))
   default = []
 }

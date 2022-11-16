@@ -20,8 +20,8 @@ resource "azurerm_availability_set" "avd-session-host-availability_sets" {
   for_each = local.session_host_vms
 
   name                         = "${local.prefix}-${each.key}-availability-set"
-  resource_group_name          = azurerm_resource_group.avd-host_pools[each.key].name
-  location                     = azurerm_resource_group.avd-host_pools[each.key].location
+  resource_group_name          = azurerm_resource_group.avd-session_hosts[each.key].name
+  location                     = azurerm_resource_group.avd-session_hosts[each.key].location
   platform_update_domain_count = lookup(each.value, "platform_update_domain_count", null)
   platform_fault_domain_count  = lookup(each.value, "platform_fault_domain_count", null)
   tags                         = lookup(each.value, "tags", local.tags)
@@ -32,8 +32,8 @@ resource "azurerm_storage_account" "avd-session-host-sa-boot_diagnostics" {
   for_each = local.session_host_vms
 
   name                     = trim("${local.prefix}-${each.key}-boot_diag", "-")
-  resource_group_name      = azurerm_resource_group.avd-host_pools[each.key].name
-  location                 = azurerm_resource_group.avd-host_pools[each.key].location
+  resource_group_name      = azurerm_resource_group.avd-session_hosts[each.key].name
+  location                 = azurerm_resource_group.avd-session_hosts[each.key].location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags                     = lookup(each.value, "tags", local.tags)
@@ -44,8 +44,8 @@ resource "azurerm_network_interface" "avd-session-host-nics" {
   for_each = local.session_host_vms
 
   name                = "${local.prefix}-${each.key}-nic"
-  resource_group_name = azurerm_resource_group.avd-host_pools[each.key].name
-  location            = azurerm_resource_group.avd-host_pools[each.key].location
+  resource_group_name = azurerm_resource_group.avd-session_hosts[each.key].name
+  location            = azurerm_resource_group.avd-session_hosts[each.key].location
   dns_servers         = lookup(each.value, "dns_servers", null)
 
   ip_configuration {
@@ -63,8 +63,8 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
   for_each = local.session_host_vms
 
   name                  = "${local.prefix}-${each.key}"
-  resource_group_name   = azurerm_resource_group.avd-host_pools[each.key].name
-  location              = azurerm_resource_group.avd-host_pools[each.key].location
+  resource_group_name   = azurerm_resource_group.avd-session_hosts[each.key].name
+  location              = azurerm_resource_group.avd-session_hosts[each.key].location
   size                  = each.value.size
   admin_username        = each.value.admin_username
   admin_password        = each.value.admin_password
@@ -181,7 +181,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-registration" {
       "modulesUrl": "${each.value.avd_session_host_registration_modules_url}",
       "configurationFunction": "Configuration.ps1\\AddSessionHost",
       "properties": {
-        "hostPoolName": "${azurerm_virtual_desktop_host_pool.avd-host_pools[each.value.host_pool_name].name}",
+        "hostPoolName": "${azurerm_virtual_desktop_host_pool.avd-session_hosts[each.value.host_pool_name].name}",
         "aadJoin": false
       }
     }
