@@ -153,7 +153,7 @@ variable "avd-session-hosts" {
       name                 = optional(string)
       caching              = string
       storage_account_type = string
-      disk_size_gb         = string
+      disk_size_gb         = optional(string)
     })
     subnet_id                    = string
     dns_servers                  = optional(list(string))
