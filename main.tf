@@ -49,7 +49,7 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
       use_session_host_timezone = lookup(each.value.scheduled_agent_updates, "use_session_host_timezone", null)
 
       dynamic "schedule" {
-        for_each = { for schedule in each.value.scheduled_agent_updates : schedule.day_of_week => schedule }
+        for_each = { for schedule in each.value.scheduled_agent_updates.schedule : schedule.day_of_week => schedule }
 
         content {
           day_of_week = lookup(schedule.value, "day_of_week", null)
