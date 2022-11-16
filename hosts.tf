@@ -181,7 +181,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-registration" {
       "modulesUrl": "${each.value.avd_session_host_registration_modules_url}",
       "configurationFunction": "Configuration.ps1\\AddSessionHost",
       "properties": {
-        "hostPoolName": "${azurerm_virtual_desktop_host_pool.avd-session_hosts[each.value.host_pool_name].name}",
+        "hostPoolName": "${azurerm_virtual_desktop_host_pool.avd-host_pools[each.value.host_pool_name].name}",
         "aadJoin": false
       }
     }
