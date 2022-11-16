@@ -42,15 +42,14 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
 
   dynamic "scheduled_agent_updates" {
     for_each = try(each.value.scheduled_agent_updates, null) != null ? [1] : []
-    iterator = scheduled
 
     content {
-      enabled                   = lookup(scheduled.value, "enabled", null)
-      timezone                  = lookup(scheduled.value, "timezone", null)
-      use_session_host_timezone = lookup(scheduled.value, "use_session_host_timezone", null)
+      enabled                   = lookup(each.value.scheduled, "enabled", null)
+      timezone                  = lookup(each.value.scheduled, "timezone", null)
+      use_session_host_timezone = lookup(each.value.scheduled, "use_session_host_timezone", null)
 
       dynamic "schedule" {
-        for_each = { for schedule in scheduled.value[0] : schedule.day => schedule }
+        for_each = { for schedule in each.value.scheduled : schedule.day => schedule }
 
         content {
           day_of_week = lookup(schedule.value, "day_of_week", null)
