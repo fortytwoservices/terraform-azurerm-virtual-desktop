@@ -60,10 +60,10 @@ variable "avd-host_pools" {
       enabled                   = optional(bool, false)
       timezone                  = optional(string)
       use_session_host_timezone = optional(bool, true)
-      schedule = optional(object({
+      schedule = optional(list(object({
         day_of_week = string
         hour_of_day = number
-      }))
+      })))
     }))
 
     registration_expiration_date = string

@@ -91,7 +91,7 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
     for_each = lookup(each.value, "source_image_id", null) == null ? (lookup(each.value, "source_image_reference", null) != null ? [1] : []) : []
     content {
       offer     = each.value.source_image_reference.offer
-      publisher = each.value.source_image_reference.publisherpublisher
+      publisher = each.value.source_image_reference.publisher
       sku       = each.value.source_image_reference.sku
       version   = each.value.source_image_reference.version
     }
