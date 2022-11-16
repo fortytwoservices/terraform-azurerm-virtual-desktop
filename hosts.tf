@@ -31,7 +31,7 @@ resource "azurerm_availability_set" "avd-session-host-availability_sets" {
 resource "azurerm_storage_account" "avd-session-host-sa-boot_diagnostics" {
   for_each = local.session_host_vms
 
-  name                     = trim("${local.prefix}-${each.key}-boot_diag", "-")
+  name                     = replace("${local.prefix}-${each.key}-boot_diag", "/[-_]/", "")
   resource_group_name      = azurerm_resource_group.avd-session_hosts[each.key].name
   location                 = azurerm_resource_group.avd-session_hosts[each.key].location
   account_tier             = "Standard"
