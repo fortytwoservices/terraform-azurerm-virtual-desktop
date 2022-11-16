@@ -110,7 +110,7 @@ resource "azurerm_virtual_desktop_application" "avd-applications" {
 ##################################
 resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
   for_each            = { for sig in var.avd-shared-image-gallery : sig.name => sig }
-  name                = replace("${local.prefix}-${each.key}", "/[-_]/", "")
+  name                = replace("${local.prefix}-${each.key}", "/[\-_]/", "")
   description         = lookup(each.value, "description", null)
   resource_group_name = azurerm_resource_group.avd-shared_image_galleries[each.key].name
   location            = azurerm_resource_group.avd-shared_image_galleries[each.key].location
