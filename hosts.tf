@@ -79,9 +79,9 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
   dynamic "plan" {
     for_each = lookup(each.value, "plan", null) != null ? [1] : []
     content {
-      name      = plan.value[0].name
-      product   = plan.value[0].product
-      publisher = plan.value[0].publisher
+      name      = each.value.plan.name
+      product   = each.value.plan.product
+      publisher = each.value.plan.publisher
     }
   }
 
@@ -89,12 +89,11 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
   source_image_id = lookup(each.value, "source_image_reference", null) == null ? lookup(each.value, "source_image_id", null) : null
   dynamic "source_image_reference" {
     for_each = lookup(each.value, "source_image_id", null) == null ? (lookup(each.value, "source_image_reference", null) != null ? [1] : []) : []
-    iterator = ref
     content {
-      offer     = ref.value[0].offer
-      publisher = ref.value[0].publisherpublisher
-      sku       = ref.value[0].sku
-      version   = ref.value[0].version
+      offer     = each.value.source_image_reference.offer
+      publisher = each.value.source_image_reference.publisherpublisher
+      sku       = each.value.source_image_reference.sku
+      version   = each.value.source_image_reference.version
     }
   }
 
