@@ -174,6 +174,7 @@ variable "avd-session-hosts" {
     avd_session_host_registration_modules_url = string
     host_pool_name                            = string
   }))
+  default = []
 }
 
 
