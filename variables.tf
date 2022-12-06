@@ -76,7 +76,7 @@ variable "avd-host_pools" {
 ################################################
 variable "avd-application_groups" {
   description = "A list of objects with one object per application group. See documentation below for values and examples."
-  type = optional(list(object({
+  type = list(object({
     name                         = string
     friendly_name                = optional(string)
     description                  = optional(string)
@@ -85,7 +85,7 @@ variable "avd-application_groups" {
     workspace_name               = string
     default_desktop_display_name = optional(string)
     tags                         = optional(map(string))
-  })))
+  }))
   default = []
 }
 
@@ -95,7 +95,7 @@ variable "avd-application_groups" {
 ##########################################
 variable "avd-applications" {
   description = "A list of objects with one object per application. See documentation below for values and examples."
-  type = optional(list(object({
+  type = list(object({
     name                         = string
     friendly_name                = optional(string)
     description                  = optional(string)
@@ -106,7 +106,7 @@ variable "avd-applications" {
     show_in_portal               = optional(bool)
     icon_path                    = optional(string)
     icon_index                   = optional(string)
-  })))
+  }))
   default = []
 }
 
@@ -116,11 +116,11 @@ variable "avd-applications" {
 ####################################################
 variable "avd-shared-image-gallery" {
   description = "An object describing a Shared Image Gallery resource, if it should be deployed."
-  type = optional(list(object({
+  type = list(object({
     name        = string
     description = optional(string)
     tags        = optional(map(string))
-  })))
+  }))
   default = []
 }
 
@@ -130,7 +130,7 @@ variable "avd-shared-image-gallery" {
 ###########################################
 variable "avd-session-hosts" {
   description = "A list of objects with one object per session host. See documentation below for values and examples."
-  type = optional(list(object({
+  type = list(object({
     name               = string
     session_host_count = number
     admin_username     = string
@@ -173,7 +173,7 @@ variable "avd-session-hosts" {
     azuread_user_dc_admin_password            = string
     avd_session_host_registration_modules_url = string
     host_pool_name                            = string
-  })))
+  }))
   default = []
 }
 
