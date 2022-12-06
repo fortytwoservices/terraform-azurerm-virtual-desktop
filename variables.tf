@@ -66,7 +66,7 @@ variable "avd-host_pools" {
       })))
     }))
 
-    registration_expiration_date = string
+    registration_expiration_date = optional(string)
   }))
 }
 
@@ -76,7 +76,7 @@ variable "avd-host_pools" {
 ################################################
 variable "avd-application_groups" {
   description = "A list of objects with one object per application group. See documentation below for values and examples."
-  type = list(object({
+  type = optional(list(object({
     name                         = string
     friendly_name                = optional(string)
     description                  = optional(string)
@@ -85,7 +85,7 @@ variable "avd-application_groups" {
     workspace_name               = string
     default_desktop_display_name = optional(string)
     tags                         = optional(map(string))
-  }))
+  })))
   default = []
 }
 
