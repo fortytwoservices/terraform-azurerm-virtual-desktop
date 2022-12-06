@@ -47,7 +47,7 @@ output-values:
   from: ""
 
 sort:
-  enabled: true
+  enabled: false
   by: name
 
 settings:
