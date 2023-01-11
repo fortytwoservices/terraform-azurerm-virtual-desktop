@@ -7,7 +7,7 @@ output "avd-host_pools" {
 
 output "avd-host_pool_registrations" {
   #value = azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations[*]
-  value = { for hp in azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations[*] : hp. => hp }
+  value = { for hp in azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations[*] : hp.name => hp }
   #value = azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations["hp1"].token
 }
 
