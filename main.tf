@@ -121,7 +121,7 @@ resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
 ##  AVD - FSLogix  ##
 #####################
 resource "azurerm_storage_account" "avd-fslogix" {
-  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+  for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
   name                     = replace("${local.prefix}-${each.key}", "/[-_]/", "")
   resource_group_name      = azurerm_resource_group.avd-fslogix.name
@@ -142,7 +142,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
 }
 
 resource "azurerm_storage_share" "avd-fslogix-file-share" {
-  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+  for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
   name                 = replace("${local.prefix}-${each.key}-share", "/[-_]/", "")
   storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
@@ -152,13 +152,13 @@ resource "azurerm_storage_share" "avd-fslogix-file-share" {
 
   lifecycle {
     ignore_changes = [
-      "quota"
+      quota
     ]
   }
 }
 
 resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
-  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+  for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
   name                 = replace("${local.prefix}-${each.key}-share-directory", "/[-_]/", "")
   share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
