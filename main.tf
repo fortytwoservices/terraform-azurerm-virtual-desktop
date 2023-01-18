@@ -140,7 +140,8 @@ resource "azurerm_storage_account" "avd-fslogix" {
     }
   }
 }
-
+/*
+###  Removed from module for the time being, as it just doesn't work, and Microsoft doesn't want to.
 resource "azurerm_storage_share" "avd-fslogix-file-share" {
   for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
@@ -164,3 +165,4 @@ resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
   share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
   storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
 }
+*/
