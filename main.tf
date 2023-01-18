@@ -116,3 +116,43 @@ resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
   location            = azurerm_resource_group.avd-shared_image_galleries[each.key].location
   tags                = lookup(each.value, "tags", local.tags)
 }
+
+#####################
+##  AVD - FSLogix  ##
+#####################
+resource "azurerm_storage_account" "avd-fslogix" {
+  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+
+  name                     = replace("${local.prefix}-${each.key}", "/[-_]/", "")
+  resource_group_name      = azurerm_resource_group.avd-fslogix.name
+  location                 = azurerm_resource_group.avd-fslogix.location
+  tags                     = azurerm_resource_group.avd-fslogix.tags
+  account_tier             = each.value.account_tier
+  account_kind             = each.value.account_kind
+  account_replication_type = each.value.account_replication_type
+  access_tier              = each.value.access_tier
+
+  dynamic "azure_files_authentication" {
+    for_each = lookup(each.value, "azure_files_authentication", null) != null ? [1] : []
+
+    content {
+      directory_type = "AADDS"
+    }
+  }
+}
+
+resource "azurerm_storage_share" "avd-fslogix-file-share" {
+  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+
+  name                 = replace("${local.prefix}-${each.key}-share", "/[-_]/", "")
+  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
+  access_tier          = each.value.access_tier
+  quota                = each.value.azure_share_quota
+
+
+  lifecycle {
+    ignore_changes = [
+      "quota"
+    ]
+  }
+}

@@ -125,6 +125,23 @@ variable "avd-shared-image-gallery" {
 }
 
 
+#####################
+##  AVD - FSLogix  ##
+#####################
+variable "avd-fslogix" {
+  description = "An object describing the storage account and file share for FSLogix"
+  type = list(object({
+    name                       = string
+    account_tier               = optional(string, "Premium")
+    account_kind               = optional(string, "FileStorage")
+    account_replication_type   = optional(string, "LRS")
+    access_tier                = optional(string, "FileStorage")
+    azure_files_authentication = optional(bool)
+    azure_share_quota          = optional(string, "100")
+  }))
+}
+
+
 ###########################################
 ##  Input Variables - AVD Session Hosts  ##
 ###########################################
