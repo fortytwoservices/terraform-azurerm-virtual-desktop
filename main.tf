@@ -156,3 +156,11 @@ resource "azurerm_storage_share" "avd-fslogix-file-share" {
     ]
   }
 }
+
+resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
+  for_each = { for sa in variable.avd-fslogix : sa.name => sa }
+
+  name                 = replace("${local.prefix}-${each.key}-share-directory", "/[-_]/", "")
+  share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
+  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
+}
