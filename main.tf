@@ -123,7 +123,7 @@ resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
 resource "azurerm_storage_account" "avd-fslogix" {
   for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
-  name                     = replace("${local.prefix}-${each.key}", "/[-_]/", "")
+  name                     = replace("${local.prefix}-${each.key}", "/[^[:alnum:]]/", "")
   resource_group_name      = azurerm_resource_group.avd-fslogix.name
   location                 = azurerm_resource_group.avd-fslogix.location
   tags                     = azurerm_resource_group.avd-fslogix.tags
