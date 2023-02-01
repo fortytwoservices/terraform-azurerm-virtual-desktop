@@ -145,7 +145,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
 resource "azurerm_storage_share" "avd-fslogix-file-share" {
   for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
-  name                 = replace("${local.prefix}-${each.key}-share", "/[-_]/", "")
+  name                 = "${local.prefix}-${each.key}-share"
   storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
   access_tier          = each.value.access_tier
   quota                = each.value.azure_share_quota
@@ -161,7 +161,7 @@ resource "azurerm_storage_share" "avd-fslogix-file-share" {
 resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
   for_each = { for sa in var.avd-fslogix : sa.name => sa }
 
-  name                 = replace("${local.prefix}-${each.key}-share-directory", "/[-_]/", "")
+  name                 = "${local.prefix}-${each.key}-share-directory"
   share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
   storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
 }
