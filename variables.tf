@@ -139,6 +139,7 @@ variable "avd-fslogix" {
     azure_files_authentication = optional(bool)
     azure_share_quota          = optional(string, "100")
   }))
+  default = []
 }
 
 
