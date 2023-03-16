@@ -4,7 +4,7 @@
 resource "azurerm_resource_group" "avd" {
   for_each = { for workspace in var.avd-workspaces : workspace.name => workspace }
   name     = "${local.prefix}-${each.key}"
-  location = each.value.location
+  location = try(each.value.location, var.location)
   tags     = each.value.tags
 }
 
