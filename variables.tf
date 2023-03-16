@@ -29,7 +29,7 @@ variable "avd-workspaces" {
   description = "A list of objects with one object per workspace. See documentation below for values and examples."
   type = list(object({
     name          = string
-    location      = string
+    location      = optional(string, var.location)
     friendly_name = string
     tags          = optional(map(string))
   }))
@@ -45,7 +45,6 @@ variable "avd-host_pools" {
     name                             = string
     friendly_name                    = optional(string)
     description                      = optional(string)
-    location                         = string
     workspace_name                   = string
     type                             = optional(string, "Pooled")
     load_balancer_type               = optional(string, "DepthFirst")
