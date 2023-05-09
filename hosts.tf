@@ -136,7 +136,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "avd-session-host-manage
 
 
 resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
-  for_each = local.session_host_vms
+  for_each = { for k, v in local.session_host_vms : k => v if lookup(local.session_host_vms.aadds_domain_name, null) != null ? true : false }
 
   name                       = "${azurerm_windows_virtual_machine.avd-session-hosts[each.key].name}-adds-join"
   virtual_machine_id         = azurerm_windows_virtual_machine.avd-session-hosts[each.key].id
