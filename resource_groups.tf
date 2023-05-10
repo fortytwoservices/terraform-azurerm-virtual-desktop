@@ -18,13 +18,13 @@ resource "azurerm_resource_group" "avd-session_hosts" {
 resource "azurerm_resource_group" "avd-fslogix" {
   name     = "${local.prefix}-avd-fslogix"
   location = var.location
-  tags     = try(each.value.tags, local.tags)
+  tags     = local.tags
 }
 
 resource "azurerm_resource_group" "avd-shared_image_galleries" {
   for_each = { for sig in var.avd-shared-image-gallery : sig.name => sig }
   name     = "${local.prefix}-${each.key}"
   location = var.location
-  tags     = try(each.value.tags, local.tags)
+  tags     = local.tags
 }
 
