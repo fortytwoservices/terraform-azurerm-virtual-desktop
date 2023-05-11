@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "avd-session_hosts" {
   for_each = local.session_host_vms
   name     = "${local.prefix}-${each.key}"
   location = var.location
-  tags     = try(each.value.tags, local.tags)
+  tags     = each.value.tags != null ? each.value.tags : local.tags
 }
 
 resource "azurerm_resource_group" "avd-fslogix" {

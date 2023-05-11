@@ -109,6 +109,12 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
   }
 
   tags = lookup(each.value, "tags", local.tags)
+
+  lifecycle {
+    ignore_changes = [
+    identity.type
+    ]
+  }
 }
 
 
