@@ -73,7 +73,7 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
   timezone              = lookup(each.value, "timezone", null)
 
   identity {
-    type = "SystemAssigned, UserAssigned"
+    type = "SystemAssigned"
   }
 
   dynamic "plan" {
