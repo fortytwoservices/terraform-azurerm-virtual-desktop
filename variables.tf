@@ -135,7 +135,7 @@ variable "avd-fslogix" {
     account_kind               = optional(string, "StorageV2")
     account_replication_type   = optional(string, "LRS")
     access_tier                = optional(string, "Hot")
-    azure_files_authentication = optional(bool)
+    azure_files_authentication = optional(bool, false)
     azure_share_quota          = optional(string, "100")
   }))
   default = []
