@@ -27,4 +27,3 @@ resource "azurerm_resource_group" "avd-shared_image_galleries" {
   location = var.location
   tags     = local.tags
 }
-
