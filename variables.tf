@@ -35,10 +35,6 @@ variable "avd-workspaces" {
   }))
 }
 
-output "avd-workspaces" {
-  value = var.avd-workspaces
-}
-
 
 ####################################
 ##  Input Variables - Host Pools  ##
