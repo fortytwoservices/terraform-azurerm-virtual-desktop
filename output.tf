@@ -1,10 +1,6 @@
 ###############
 ##  Outputs  ##
 ###############
-output "avd-workspaces" {
-  value = var.avd-workspaces
-}
-
 output "avd-host_pools" {
   value = azurerm_virtual_desktop_host_pool.avd-host_pools[*]
 }
