@@ -133,7 +133,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
   access_tier              = each.value.access_tier
 
   dynamic "azure_files_authentication" {
-    for_each = lookup(each.value, "azure_files_authentication", null) != null ? [1] : []
+    for_each = lookup(each.value, "azure_files_authentication", false) == true ? [1] : []
 
     content {
       directory_type = "AADDS"
