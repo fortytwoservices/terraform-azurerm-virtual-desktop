@@ -29,7 +29,7 @@ variable "avd-workspaces" {
   description = "A list of objects with one object per workspace. See documentation below for values and examples."
   type = list(object({
     name          = string
-    location      = optional(string, null)
+    location      = optional(string)
     friendly_name = string
     tags          = optional(map(string))
   }))
