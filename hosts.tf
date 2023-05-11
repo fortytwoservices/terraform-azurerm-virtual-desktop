@@ -112,7 +112,7 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
 
   lifecycle {
     ignore_changes = [
-    identity.type
+    identity[0].type
     ]
   }
 }
