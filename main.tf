@@ -100,14 +100,14 @@ locals {
 }
 
 data "azuread_user" "avd-application-groups-users" {
-  for_each             = { for user in local.avd-application-group-users : user.user_key => user }
-  user_principal_names = each.value.upn
+  for_each            = { for user in local.avd-application-group-users : user.user_key => user }
+  user_principal_name = each.value.upn
 }
 
 resource "azurerm_role_assignment" "avd-application-groups-users" {
-  for_each             = { for user in data.azuread_users.avd-application-groups-users.users : user.user_principal_name => user }
+  for_each            = { for user in local.avd-application-group-users : user.user_key => user }
   scope                = azurerm_virtual_desktop_application_group.avd-application_groups[each.value.ag_key].id
-  principal_id         = each.value.object_id
+  principal_id         = data.azuread_user.avd-application-groups-users[each.key].object_id
   role_definition_name = "Desktop Virtualization User"
 }
 
