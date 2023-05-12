@@ -88,7 +88,7 @@ resource "azurerm_virtual_desktop_application_group" "avd-application_groups" {
 locals {
   avd-application-group-users = flatten([
     for ag in var.avd-application_groups : [
-      for user in try(ag.avd-users, []) : [
+      for user in ag.avd-users != null ? ag.avd-users : [] : [
         {
           ag_key   = ag.name
           user_key = "${ag.name}-${user}"
