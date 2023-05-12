@@ -84,6 +84,7 @@ variable "avd-application_groups" {
     workspace_name               = string
     default_desktop_display_name = optional(string)
     tags                         = optional(map(string))
+    avd-users = optional(list(string))
   }))
   default = []
 }
