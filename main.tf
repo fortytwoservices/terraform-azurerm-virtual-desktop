@@ -168,14 +168,14 @@ resource "azurerm_storage_account" "avd-fslogix" {
 }
 
 resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-tf-deployment-spn" {
-  for_each = { for sa in var.avd-fslogix : sa.name => sa if sa. }
+  for_each = { for sa in var.avd-fslogix : sa.name => sa if sa.azure_domain_join_type }
   principal_id         = each.value.terraform_deployment_spn_object_id
   scope                = azurerm_storage_account.avd-fslogix.id
   role_definition_name = "Storage File Data SMB Share Contributor"
 }
 
 resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-avd-users" {
-  for_each = { for sa in var.avd-fslogix : sa.name => sa }
+  for_each = { for sa in var.avd-fslogix : sa.name => sa if so.azure_domain_join_type }
   principal_id         = var.avd-users
   scope                = azurerm_storage_account.avd-fslogix.id
   role_definition_name = "Storage File Data SMB Share Contributor"
