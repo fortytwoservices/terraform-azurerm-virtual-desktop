@@ -185,6 +185,7 @@ variable "avd-session-hosts" {
       lun                  = number
       caching              = optional(string, "None")
     })))
+    azure_domain_join_type                    = optional(string, "azuread") # Allowed values are "azuread" and "aadds"
     aadds_domain_name                         = optional(string)
     aadds_avd_ou_path                         = optional(string)
     azuread_user_dc_admin_upn                 = optional(string)
