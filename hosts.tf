@@ -143,7 +143,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "avd-session-host-manage
 
 ### Conditional deployment of Azure AD join
 resource "azurerm_virtual_machine_extension" "avd-session-host-azuread-join" {
-  for_each = { for k, v in local.session_host_vms : k => v if v.azure_domain_join_type == "azuread" ? true : false }
+  for_each = { for k, v in local.session_host_vms : k => v if v.azure_domain_join_type == "AD" ? true : false }
 
   name                       = "${azurerm_windows_virtual_machine.avd-session-hosts[each.key].name}-azuread-join"
   virtual_machine_id         = azurerm_windows_virtual_machine.avd-session-hosts[each.key].id
@@ -155,7 +155,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-azuread-join" {
 
 ### Conditional deployment of Azure Active Directory Domain Services join
 resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
-  for_each = { for k, v in local.session_host_vms : k => v if v.azure_domain_join_type == "aadds" ? true : false }
+  for_each = { for k, v in local.session_host_vms : k => v if v.azure_domain_join_type == "AADDS" ? true : false }
 
   name                       = "${azurerm_windows_virtual_machine.avd-session-hosts[each.key].name}-adds-join"
   virtual_machine_id         = azurerm_windows_virtual_machine.avd-session-hosts[each.key].id

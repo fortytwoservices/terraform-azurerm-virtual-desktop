@@ -84,7 +84,7 @@ variable "avd-application_groups" {
     default_desktop_display_name = optional(string)       # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"
     tags                         = optional(map(string))  # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
     avd-users                    = optional(list(string)) # List of UPNs for the Users that should have access to the Azure Virtual Desktop service
-  }))                                                     #
+  }))
   default = []
 }
 
@@ -135,8 +135,9 @@ variable "avd-fslogix" {
     account_kind               = optional(string, "StorageV2") # Storage Account kind. Possible values are "BlobStorage", "BlockBlobStorage", "FileStorage", "Storage", "StorageV2". Defaults to "StorageV2"
     account_replication_type   = optional(string, "LRS")       # Storage Account Replication Type. Possible values are "LRS", "GRS", "RAGRS", "ZRS", "GZRS", "RAGZRS". Defaults to "LRS"
     access_tier                = optional(string, "Hot")       # Storage Account Access Tier. Possible values are "Hot" or "Cool". Defaults to "Hot"
-    azure_files_authentication = optional(string)              # If Azure Files Authentication should be enabled. Possible values are "AADDS", "AD", "AADKERB". Defaults to "null".
     azure_share_quota          = optional(string, "100")       # The maximum size of the share, in gigabytes
+    azure_files_authentication = optional(string)              # If Azure Files Authentication should be enabled. Possible values are "AADDS", "AD", "AADKERB". Defaults to "null".
+    azure_domain_join_type     = optional(string, "AD")        # Allowed values are "AD" and "AADDS". Defaults to "AD"
   }))
   default = []
 }
@@ -148,50 +149,50 @@ variable "avd-fslogix" {
 variable "avd-session-hosts" {
   description = "A list of objects with one object per session host. See documentation below for values and examples."
   type = list(object({
-    name               = string                                             # Name of session hosts
-    session_host_count = number                                             # Number of session hosts
-    admin_username     = string                                             # Local administrator username
-    admin_password     = string                                             # Local administrator password
-    size               = string                                             # VM Size SKU for the session hosts
-    timezone           = optional(string)                                   # Specify timezone for the session hosts
-    source_image_id    = optional(string)                                   # One of either source_image_id or source_image_reference must be set
-    source_image_reference = optional(object({                              # Source Image Reference
-      publisher = string                                                    # Image Publisher
-      offer     = string                                                    # Image Offer
-      sku       = string                                                    # Image SKU
-      version   = string                                                    # Image Version
-    }))                                                                     #
-    plan = optional(object({                                                # Plan for Microsoft Marketplace image
-      name      = string                                                    # Image Name
-      product   = string                                                    # Image Product
-      publisher = string                                                    # Image Publisher
-    }))                                                                     #
-    os_disk = object({                                                      # Operating System Disk block
-      name                 = optional(string)                               # Name of OS disk
-      caching              = string                                         # Caching Type. Possible values are "None", "ReadOnly", "ReadWrite"
-      storage_account_type = string                                         # Storage Account Type. Possible values are "Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"
-      disk_size_gb         = optional(string)                               # Size of OS Disk in GigaBytes
-    })                                                                      #
-    subnet_id                    = string                                   # Subnet ID for the session hosts to be attached to
-    dns_servers                  = optional(list(string))                   # Specify DNS servers for the session hosts
-    platform_update_domain_count = optional(number)                         # Availability Set Platform Update Domain count
-    platform_fault_domain_count  = optional(number)                         # Availability Set Platform Fault Domain count
-    tags                         = optional(map(string))                    # Map of tags to be set. If omitted, default tags will be applied
-    data_disks = optional(list(object({                                     # Repeatable block for additional data disks
-      name                 = string                                         # Name of Data Disk
-      storage_account_type = optional(string, "Standard_LRS")               # Storage Account Type for Data Disk
-      disk_size_gb         = number                                         # Size of Data Disk in GigaBytes
-      lun                  = number                                         # Unique LUN number for Data Disk
-      caching              = optional(string, "None")                       # Type of Caching for Data Disk. Possible values are "None", "ReadOnly", "ReadWrite"
-    })))                                                                    #
-    azure_domain_join_type                    = optional(string, "azuread") # Allowed values are "azuread" and "aadds"
-    aadds_domain_name                         = optional(string)            # Name of Azure Active Directory Domain Services to join the session hosts to
-    aadds_avd_ou_path                         = optional(string)            # Azure Active Directory Domain Services OU Path
-    azuread_user_dc_admin_upn                 = optional(string)            # DC Admin username
-    azuread_user_dc_admin_password            = optional(string)            # DC Admin password
-    avd_session_host_registration_modules_url = string                      # AVD Session Host registration modules URL
-    host_pool_name                            = string                      # Name of Host Pool for the Session Hosts to be joined to
-  }))                                                                       #
+    name               = string                                        # Name of session hosts
+    session_host_count = number                                        # Number of session hosts
+    admin_username     = string                                        # Local administrator username
+    admin_password     = string                                        # Local administrator password
+    size               = string                                        # VM Size SKU for the session hosts
+    timezone           = optional(string)                              # Specify timezone for the session hosts
+    source_image_id    = optional(string)                              # One of either source_image_id or source_image_reference must be set
+    source_image_reference = optional(object({                         # Source Image Reference
+      publisher = string                                               # Image Publisher
+      offer     = string                                               # Image Offer
+      sku       = string                                               # Image SKU
+      version   = string                                               # Image Version
+    }))                                                                #
+    plan = optional(object({                                           # Plan for Microsoft Marketplace image
+      name      = string                                               # Image Name
+      product   = string                                               # Image Product
+      publisher = string                                               # Image Publisher
+    }))                                                                #
+    os_disk = object({                                                 # Operating System Disk block
+      name                 = optional(string)                          # Name of OS disk
+      caching              = string                                    # Caching Type. Possible values are "None", "ReadOnly", "ReadWrite"
+      storage_account_type = string                                    # Storage Account Type. Possible values are "Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"
+      disk_size_gb         = optional(string)                          # Size of OS Disk in GigaBytes
+    })                                                                 #
+    subnet_id                    = string                              # Subnet ID for the session hosts to be attached to
+    dns_servers                  = optional(list(string))              # Specify DNS servers for the session hosts
+    platform_update_domain_count = optional(number)                    # Availability Set Platform Update Domain count
+    platform_fault_domain_count  = optional(number)                    # Availability Set Platform Fault Domain count
+    tags                         = optional(map(string))               # Map of tags to be set. If omitted, default tags will be applied
+    data_disks = optional(list(object({                                # Repeatable block for additional data disks
+      name                 = string                                    # Name of Data Disk
+      storage_account_type = optional(string, "Standard_LRS")          # Storage Account Type for Data Disk
+      disk_size_gb         = number                                    # Size of Data Disk in GigaBytes
+      lun                  = number                                    # Unique LUN number for Data Disk
+      caching              = optional(string, "None")                  # Type of Caching for Data Disk. Possible values are "None", "ReadOnly", "ReadWrite"
+    })))                                                               #
+    azure_domain_join_type                    = optional(string, "AD") # Allowed values are "AD" and "AADDS"
+    aadds_domain_name                         = optional(string)       # Name of Azure Active Directory Domain Services to join the session hosts to
+    aadds_avd_ou_path                         = optional(string)       # Azure Active Directory Domain Services OU Path
+    azuread_user_dc_admin_upn                 = optional(string)       # DC Admin username
+    azuread_user_dc_admin_password            = optional(string)       # DC Admin password
+    avd_session_host_registration_modules_url = string                 # AVD Session Host registration modules URL
+    host_pool_name                            = string                 # Name of Host Pool for the Session Hosts to be joined to
+  }))
   default = []
 }
 

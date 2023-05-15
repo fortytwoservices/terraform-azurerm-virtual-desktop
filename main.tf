@@ -162,7 +162,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
     for_each = lookup(each.value, "azure_files_authentication", false) == true ? [1] : []
 
     content {
-      directory_type = "AADDS"
+      directory_type = each.value.azure_domain_join_type
     }
   }
 }
