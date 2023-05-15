@@ -143,8 +143,7 @@ variable "avd-fslogix" {
     account_replication_type           = optional(string, "LRS")         # Storage Account Replication Type. Possible values are "LRS", "GRS", "RAGRS", "ZRS", "GZRS", "RAGZRS". Defaults to "LRS"
     access_tier                        = optional(string, "Hot")         # Storage Account Access Tier. Possible values are "Hot" or "Cool". Defaults to "Hot"
     azure_share_quota                  = optional(string, "100")         # The maximum size of the share, in gigabytes
-    azure_files_authentication         = optional(string)                # If Azure Files Authentication should be enabled. Possible values are "AADDS", "AD", "AADKERB". Defaults to "null".
-    azure_domain_join_type             = optional(string, "AADKERB")     # Allowed values are "AD", "AADKERB", "AADDS". Defaults to "AADKERB"
+    azure_domain_join_type             = optional(string)                # Allowed values are "AD", "AADKERB", "AADDS". Defaults to "null" and no domain join is performed
     terraform_deployment_spn_object_id = optional(string)                # Object ID of the Terraform Deployment Service Principal, to assign correct rights to the FSLogix storage account
   }))
   default = []
