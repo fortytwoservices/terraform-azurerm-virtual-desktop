@@ -22,12 +22,6 @@ variable "tags" {
   default     = null
 }
 
-variable "avd-users" {
-  description = "List of user UPNs that should have access to Azure Virtual Desktop"
-  type        = list(string)
-  default     = []
-}
-
 
 #######################################
 ##  Input Variables - AVD Workspace  ##
@@ -145,6 +139,7 @@ variable "avd-fslogix" {
     azure_share_quota                  = optional(string, "100")         # The maximum size of the share, in gigabytes
     azure_domain_join_type             = optional(string)                # Allowed values are "AD", "AADKERB", "AADDS". Defaults to "null" and no domain join is performed
     terraform_deployment_spn_object_id = optional(string)                # Object ID of the Terraform Deployment Service Principal, to assign correct rights to the FSLogix storage account
+    ad_group_avd_users_object_id       = optional(string)                # Object ID of the Azure AD Group containing the AVD Users
   }))
   default = []
 }
