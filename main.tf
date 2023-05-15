@@ -159,7 +159,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
   access_tier              = each.value.access_tier
 
   dynamic "azure_files_authentication" {
-    for_each = each.valueazure_domain_join_type != null? [1] : []
+    for_each = each.value.azure_domain_join_type != null? [1] : []
 
     content {
       directory_type = each.value.azure_domain_join_type
