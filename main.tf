@@ -182,31 +182,31 @@ resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-avd-users"
 }
 
 ###  Removed from module for the time being, as it just doesn't work, and Microsoft doesn't want to.
-resource "azurerm_storage_share" "avd-fslogix-file-share" {
-  for_each = { for sa in var.avd-fslogix : sa.name => sa }
-
-  name                 = "${local.prefix}-${each.key}-share"
-  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
-  access_tier          = each.value.access_tier
-  quota                = each.value.azure_share_quota
-
-
-  lifecycle {
-    ignore_changes = [
-      quota
-    ]
-  }
-
-  depends_on = [
-    azurerm_role_assignment.avd-fslogix-smb-share-contributor-avd-users,
-    azurerm_role_assignment.avd-fslogix-smb-share-contributor-tf-deployment-spn
-  ]
-}
-
-resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
-  for_each = { for sa in var.avd-fslogix : sa.name => sa }
-
-  name                 = "${local.prefix}-${each.key}-share-directory"
-  share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
-  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
-}
+#resource "azurerm_storage_share" "avd-fslogix-file-share" {
+#  for_each = { for sa in var.avd-fslogix : sa.name => sa }
+#
+#  name                 = "${local.prefix}-${each.key}-share"
+#  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
+#  access_tier          = each.value.access_tier
+#  quota                = each.value.azure_share_quota
+#
+#
+#  lifecycle {
+#    ignore_changes = [
+#      quota
+#    ]
+#  }
+#
+#  depends_on = [
+#    azurerm_role_assignment.avd-fslogix-smb-share-contributor-avd-users,
+#    azurerm_role_assignment.avd-fslogix-smb-share-contributor-tf-deployment-spn
+#  ]
+#}
+#
+#resource "azurerm_storage_share_directory" "avd-fslogix-file-share-directory" {
+#  for_each = { for sa in var.avd-fslogix : sa.name => sa }
+#
+#  name                 = "${local.prefix}-${each.key}-share-directory"
+#  share_name           = azurerm_storage_share.avd-fslogix-file-share[each.key].name
+#  storage_account_name = azurerm_storage_account.avd-fslogix[each.key].name
+#}
