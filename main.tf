@@ -105,7 +105,7 @@ data "azuread_user" "avd-application-groups-users" {
 }
 
 resource "azurerm_role_assignment" "avd-application-groups-users" {
-  for_each            = { for user in local.avd-application-group-users : user.user_key => user }
+  for_each             = { for user in local.avd-application-group-users : user.user_key => user }
   scope                = azurerm_virtual_desktop_application_group.avd-application_groups[each.value.ag_key].id
   principal_id         = data.azuread_user.avd-application-groups-users[each.key].object_id
   role_definition_name = "Desktop Virtualization User"
@@ -165,6 +165,19 @@ resource "azurerm_storage_account" "avd-fslogix" {
       directory_type = each.value.azure_domain_join_type
     }
   }
+}
+
+resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-tf-deployment-spn" {
+  for_each = { for sa in var.avd-fslogix : sa.name => sa }
+  principal_id         = each.value.terraform_deployment_spn_object_id
+  scope                = azurerm_storage_account.avd-fslogix.id
+  role_definition_name = "Storage File Data SMB Share Contributor"
+}
+
+resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-avd-users" {
+  principal_id         = var.avd-users
+  scope                = azurerm_storage_account.avd-fslogix.id
+  role_definition_name = "Storage File Data SMB Share Contributor"
 }
 
 ###  Removed from module for the time being, as it just doesn't work, and Microsoft doesn't want to.
