@@ -185,10 +185,10 @@ variable "avd-session-hosts" {
       lun                  = number
       caching              = optional(string, "None")
     })))
-    aadds_domain_name                         = optional(string, null)
-    aadds_avd_ou_path                         = optional(string, null)
-    azuread_user_dc_admin_upn                 = optional(string, null)
-    azuread_user_dc_admin_password            = optional(string, null)
+    aadds_domain_name                         = optional(string)
+    aadds_avd_ou_path                         = optional(string)
+    azuread_user_dc_admin_upn                 = optional(string)
+    azuread_user_dc_admin_password            = optional(string)
     avd_session_host_registration_modules_url = string
     host_pool_name                            = string
   }))
