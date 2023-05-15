@@ -176,7 +176,7 @@ resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-tf-deploym
 
 resource "azurerm_role_assignment" "avd-fslogix-smb-share-contributor-avd-users" {
   for_each = { for sa in var.avd-fslogix : sa.name => sa if sa.azure_domain_join_type }
-  principal_id         = sa.ad_group_avd_users_object_id
+  principal_id         = each.value.ad_group_avd_users_object_id
   scope                = azurerm_storage_account.avd-fslogix[each.key].id
   role_definition_name = "Storage File Data SMB Share Contributor"
 }
