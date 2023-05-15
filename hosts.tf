@@ -112,7 +112,7 @@ resource "azurerm_windows_virtual_machine" "avd-session-hosts" {
 
   lifecycle {
     ignore_changes = [
-    identity
+      identity
     ]
   }
 }
@@ -140,6 +140,18 @@ resource "azurerm_virtual_machine_data_disk_attachment" "avd-session-host-manage
   caching            = each.value.caching
 }
 
+
+### Conditional deployment of Azure Active Directory Domain Services join
+resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
+  for_each = { for k, v in local.session_host_vms : k => v if try(local.session_host_vms.azure_domain_join_type, azuread) == "azuread" ? true : false }
+
+  name                       = "${azurerm_windows_virtual_machine.avd-session-hosts[each.key].name}-azuread-join"
+  virtual_machine_id         = azurerm_windows_virtual_machine.avd-session-hosts[each.key].id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADLoginForWindows"
+  type_handler_version       = "2.0.0.2"
+  auto_upgrade_minor_version = true
+}
 
 ### Conditional deployment of Azure Active Directory Domain Services join
 resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
