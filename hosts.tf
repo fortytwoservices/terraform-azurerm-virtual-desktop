@@ -141,8 +141,8 @@ resource "azurerm_virtual_machine_data_disk_attachment" "avd-session-host-manage
 }
 
 
-### Conditional deployment of Azure Active Directory Domain Services join
-resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
+### Conditional deployment of Azure AD join
+resource "azurerm_virtual_machine_extension" "avd-session-host-azuread-join" {
   for_each = { for k, v in local.session_host_vms : k => v if try(local.session_host_vms.azure_domain_join_type, azuread) == "azuread" ? true : false }
 
   name                       = "${azurerm_windows_virtual_machine.avd-session-hosts[each.key].name}-azuread-join"
