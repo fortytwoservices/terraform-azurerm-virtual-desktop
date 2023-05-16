@@ -1,5 +1,6 @@
 <!-- BEGIN_TF_DOCS -->
 
+Header section test
 
 ## Requirements
 

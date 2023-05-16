@@ -2,7 +2,7 @@ version: ">= 0.15.0"
 
 formatter: markdown
 
-header-from: main.tf
+header-from: terraform.tf
 footer-from: ""
 
 sections:
@@ -15,6 +15,30 @@ sections:
 
 content: |-
   {{ .Header }}
+  This module deployes all resources needed for deploying Azure Virtual Desktop.
+
+  ### NB!
+  This module does not currently deploy Azuer Files Share and Files Directory for FSLogix due to a bug in the AzureRM Terraform Provider. This step has to be completed manually in scenarios where FSLogix is needed.
+
+  ## Resources deployed by this module
+  Which resources, and how many of each depends on your configuration
+  - Resource Groups
+  - AVD Workspaces
+  - AVD Host Pools
+  - AVD Application Groups
+  - AVD Applications
+  - Azure Shared Image Gallery
+  - Azure Storage Account for FSLogix
+  - Windows Virtual Machines as session hosts. Either joined to Azure AD or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
+
+
+  ## Resources NOT deployed by this module
+  - Azure Virtual Network
+  - Azure Subnet
+  - Azure Network Security Groups
+  - Azure AD Groupsh - Typically for designating AVD Users and Admins
+  - Azure Key Vault - Typically for storage of secrets created by the module. Available in module outputs.
+  - Azure Active Directory Domain Services
 
   {{ .Requirements }}
 
