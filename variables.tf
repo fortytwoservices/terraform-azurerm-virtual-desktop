@@ -2,7 +2,7 @@
 ##  Input Variables - Global  ##
 ################################
 variable "shortname" {
-  description = "A short version of the customer name. Eg. Fortytwo would be ft"
+  description = "Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft"
   type        = string
   default     = null
 }
