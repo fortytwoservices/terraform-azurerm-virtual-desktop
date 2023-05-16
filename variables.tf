@@ -84,7 +84,7 @@ variable "avd-application_groups" {
     workspace_name               = string                 # Name of the Workspace to be associated with the Application Group
     default_desktop_display_name = optional(string)       # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"
     tags                         = optional(map(string))  # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
-    avd-users                    = optional(list(string)) # List of UPNs for the Users that should have access to the Azure Virtual Desktop service
+    group-avd-users-object-id    = optional(list(string)) # Group ID of the Azure AD group that contains the users that should have access to the session hosts
   }))
   default = []
 }
