@@ -169,7 +169,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_avd-host_pools"></a> [avd-host\_pools](#output\_avd-host\_pools) | ############## #  Outputs  ## ############## |
+| <a name="output_avd-host_pools"></a> [avd-host\_pools](#output\_avd-host\_pools) | Outputs a list of objects for each Host Pool created |
 | <a name="output_avd-host_pool_registrations"></a> [avd-host\_pool\_registrations](#output\_avd-host\_pool\_registrations) | n/a |
 | <a name="output_avd-application_groups"></a> [avd-application\_groups](#output\_avd-application\_groups) | n/a |
 | <a name="output_avd-applications"></a> [avd-applications](#output\_avd-applications) | n/a |
