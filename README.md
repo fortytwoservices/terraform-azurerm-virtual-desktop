@@ -23,6 +23,8 @@ Which resources, and how many of each depends on your configuration
 - Azure Storage Account for FSLogix
 - Windows Virtual Machines as session hosts. Either joined to Azure AD or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
 
+*Complete list of all Terraform resources deployed is provided at the bottom of this page*
+
 ## Resources NOT deployed by this module
 
 - Azure Virtual Network
