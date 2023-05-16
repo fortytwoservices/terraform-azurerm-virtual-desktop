@@ -195,7 +195,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-registration" {
   publisher            = "Microsoft.Powershell"
   type                 = "DSC"
   type_handler_version = "2.73"
-  tags                 = azurerm_windows_virtual_machine.avd-session-hosts[each.value.host_key].tags
+  tags                 = azurerm_windows_virtual_machine.avd-session-hosts[each.key].tags
 
   settings = <<-SETTINGS
     {
