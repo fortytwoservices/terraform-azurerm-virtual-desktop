@@ -8,7 +8,7 @@ variable "shortname" {
 }
 
 variable "env" {
-  description = "What environment the resources are deployed in. Eg. prod, test, dev"
+  description = "What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage"
   type        = string
 }
 
@@ -209,6 +209,11 @@ locals {
 
   # Use this map with the var.env input variable as input, to translate the env to human readable
   env = {
+    p     = "Production"
+    d     = "Development"
+    t     = "Test"
+    q     = "QA"
+    s     = "Staging"
     prod  = "Production"
     dev   = "Development"
     test  = "Test"

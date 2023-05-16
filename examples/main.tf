@@ -6,7 +6,7 @@ module "avd1" {
   source = "github.com/amestofortytwo/terraform-azurerm-virtual-desktop.git" # This referes to the latest version of the source repo. It's recommended to specify the release version!
 
   customer_shortname = local.shortname    # Shortname appended to the beginning of all resources. Ommit to
-  env                = "d"                # Dev, module expects single letter
+  env                = "dev"              # Dev, module expects single letter
   location           = var.location       # Default location for resources
   tags               = local.default-tags # Default tags for resources
 
