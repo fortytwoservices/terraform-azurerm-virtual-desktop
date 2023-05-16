@@ -1,9 +1,10 @@
 ################################
 ##  Input Variables - Global  ##
 ################################
-variable "customer_shortname" {
+variable "shortname" {
   description = "A short version of the customer name. Eg. Fortytwo would be ft"
   type        = string
+  default     = null
 }
 
 variable "env" {
@@ -204,7 +205,7 @@ variable "avd-session-hosts" {
 ##  Local Variables  ##
 #######################
 locals {
-  prefix = "${var.customer_shortname}-${var.env}"
+  prefix = "${var.shortname != null ? "${var.shortname}-" : ""}${var.env}"
 
   # Use this map with the var.env input variable as input, to translate the env to human readable
   env = {
@@ -217,7 +218,7 @@ locals {
 
   tags = var.tags == null ? local.default-tags : var.tags
   default-tags = {
-    Customer    = var.customer_shortname
+    Customer    = var.shortname
     Environment = local.env[var.env]
     Location    = var.location
   }

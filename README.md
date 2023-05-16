@@ -170,11 +170,11 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_avd-host_pools"></a> [avd-host\_pools](#output\_avd-host\_pools) | Outputs a list of objects for each Host Pool created |
-| <a name="output_avd-host_pool_registrations"></a> [avd-host\_pool\_registrations](#output\_avd-host\_pool\_registrations) | n/a |
-| <a name="output_avd-application_groups"></a> [avd-application\_groups](#output\_avd-application\_groups) | n/a |
-| <a name="output_avd-applications"></a> [avd-applications](#output\_avd-applications) | n/a |
-| <a name="output_avd-shared_image_galleries"></a> [avd-shared\_image\_galleries](#output\_avd-shared\_image\_galleries) | n/a |
-| <a name="output_avd-session-hosts"></a> [avd-session-hosts](#output\_avd-session-hosts) | n/a |
+| <a name="output_avd-host_pool_registrations"></a> [avd-host\_pool\_registrations](#output\_avd-host\_pool\_registrations) | Outputs a list of objects for each Host Pool created |
+| <a name="output_avd-application_groups"></a> [avd-application\_groups](#output\_avd-application\_groups) | Outputs a list of objects for each Application Group created |
+| <a name="output_avd-applications"></a> [avd-applications](#output\_avd-applications) | Outputs a list of objects for each Application created |
+| <a name="output_avd-shared_image_galleries"></a> [avd-shared\_image\_galleries](#output\_avd-shared\_image\_galleries) | Outputs a list of objects for each Shared Image Gallery created |
+| <a name="output_avd-session-hosts"></a> [avd-session-hosts](#output\_avd-session-hosts) | Outputs a list of objects for each set of Session Hosts, and each Session Host created |
 
 ## Resources
 
