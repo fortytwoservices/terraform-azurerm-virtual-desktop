@@ -88,7 +88,7 @@ resource "azurerm_virtual_desktop_application_group" "avd-application_groups" {
 resource "azurerm_role_assignment" "avd-application-groups-users" {
   for_each             = { for ag in var.avd-application_groups : ag.name => ag }
   scope                = azurerm_virtual_desktop_application_group.avd-application_groups[each.key].id
-  principal_id         = each.value.group-avd-users-object-id.object_id
+  principal_id         = each.value.group-avd-users-object-id
   role_definition_name = "Desktop Virtualization User"
 }
 

@@ -18,7 +18,7 @@ resource "azurerm_resource_group" "avd-session_hosts" {
 resource "azurerm_role_assignment" "avd-virtual-machine-user-login" {
   for_each             = local.session_host_vms
   scope                = azurerm_resource_group.avd-session_hosts[each.key].id
-  principal_id         = each.value.group-avd-users
+  principal_id         = each.value.group-avd-users-object-id
   role_definition_name = "Virtual Machine User Login"
 }
 
