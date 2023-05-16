@@ -220,5 +220,9 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-registration" {
     ignore_changes = [settings, protected_settings]
   }
 
-  depends_on = [azurerm_virtual_machine_extension.avd-session-host-aadds-join]
+  depends_on = [
+    azurerm_virtual_desktop_host_pool.avd-host_pools,
+    azurerm_virtual_machine_extension.avd-session-host-aadds-join,
+    azurerm_virtual_machine_extension.avd-session-host-azuread-join
+  ]
 }
