@@ -76,15 +76,15 @@ variable "avd-host_pools" {
 variable "avd-application_groups" {
   description = "A list of objects with one object per application group. See documentation below for values and examples."
   type = list(object({
-    name                         = string                 # Name of Application Group
-    friendly_name                = optional(string)       # Pretty friendly name to be displayed
-    description                  = optional(string)       # Description of the Application Group
-    type                         = string                 # Type of Application Group. Possible values are "RemoteApp" or "Desktop"
-    host_pool_name               = string                 # Name of Host Pool to be associated with the Application Group
-    workspace_name               = string                 # Name of the Workspace to be associated with the Application Group
-    default_desktop_display_name = optional(string)       # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"
-    tags                         = optional(map(string))  # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
-    group-avd-users-object-id    = optional(list(string)) # Group ID of the Azure AD group that contains the users that should have access to the session hosts
+    name                         = string                # Name of Application Group
+    friendly_name                = optional(string)      # Pretty friendly name to be displayed
+    description                  = optional(string)      # Description of the Application Group
+    type                         = string                # Type of Application Group. Possible values are "RemoteApp" or "Desktop"
+    host_pool_name               = string                # Name of Host Pool to be associated with the Application Group
+    workspace_name               = string                # Name of the Workspace to be associated with the Application Group
+    default_desktop_display_name = optional(string)      # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"
+    tags                         = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
+    group-avd-users-object-id    = optional(string)      # Group ID of the Azure AD group that contains the users that should have access to the session hosts
   }))
   default = []
 }
@@ -153,7 +153,7 @@ variable "avd-session-hosts" {
   type = list(object({
     name                      = string                                      # Name of session hosts
     session_host_count        = number                                      # Number of session hosts
-    group-avd-users-object-id = optional(list(string))                      # Group ID of the Azure AD group that contains the users that should have access to the session hosts
+    group-avd-users-object-id = optional(string)                            # Group ID of the Azure AD group that contains the users that should have access to the session hosts
     admin_username            = string                                      # Local administrator username
     admin_password            = string                                      # Local administrator password
     size                      = string                                      # VM Size SKU for the session hosts
