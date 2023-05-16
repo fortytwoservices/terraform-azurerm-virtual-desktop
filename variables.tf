@@ -49,7 +49,7 @@ variable "avd-host_pools" {
     workspace_name                   = string                         # Workspace for the Host Pool to be associated with
     type                             = optional(string, "Pooled")     # Type of Host Pool. Possible values are "Pooled", "Personal". Defaults to "Pooled"
     load_balancer_type               = optional(string, "DepthFirst") # Load Balancer Type. Possible values are "BreadthFirst", "DepthFirst", "Persistent". "Defaults to "DepthFirst".
-    validate_environment             = optional(bool, false)          # If environment should be validated or not. Defaults to "false"
+    validate_environment             = optional(bool, true)           # If environment should be validated or not. Defaults to "true"
     start_vm_on_connect              = optional(bool, false)          # Start VM when it's connected to. Defaults to "false"
     custom_rdp_properties            = optional(string)               # A string of Custom RDP Properties to be applied to the Host Pool
     personal_desktop_assignment_type = optional(string, "Automatic")  # Personal Desktop Assignment Type. Possible values are "Automatic" and "Direct". Defaults to "Automatic"
