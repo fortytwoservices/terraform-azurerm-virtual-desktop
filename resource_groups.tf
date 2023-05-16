@@ -15,6 +15,13 @@ resource "azurerm_resource_group" "avd-session_hosts" {
   tags     = each.value.tags != null ? each.value.tags : ( var.tags != null ? var.tags : local.tags )
 }
 
+resource "azurerm_role_assignment" "avd-virtual-machine-user-login" {
+  for_each = local.session_host_vms
+  scope = azurerm_resource_group.avd-session_hosts[each.key].id
+  principal_id = each.value.group-avd-users
+  role_definition_name = "Virtual Machine User Login"
+}
+
 resource "azurerm_resource_group" "avd-fslogix" {
   name     = "${local.prefix}-avd-fslogix"
   location = var.location

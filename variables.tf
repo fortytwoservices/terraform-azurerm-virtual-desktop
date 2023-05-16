@@ -151,13 +151,14 @@ variable "avd-fslogix" {
 variable "avd-session-hosts" {
   description = "A list of objects with one object per session host. See documentation below for values and examples."
   type = list(object({
-    name               = string                                             # Name of session hosts
-    session_host_count = number                                             # Number of session hosts
-    admin_username     = string                                             # Local administrator username
-    admin_password     = string                                             # Local administrator password
-    size               = string                                             # VM Size SKU for the session hosts
-    timezone           = optional(string)                                   # Specify timezone for the session hosts
-    source_image_id    = optional(string)                                   # One of either source_image_id or source_image_reference must be set
+    name                      = string                                      # Name of session hosts
+    session_host_count        = number                                      # Number of session hosts
+    group-avd-users-object-id = optional(list(string))                      # Group ID of the Azure AD group that contains the users that should have access to the session hosts
+    admin_username            = string                                      # Local administrator username
+    admin_password            = string                                      # Local administrator password
+    size                      = string                                      # VM Size SKU for the session hosts
+    timezone                  = optional(string)                            # Specify timezone for the session hosts
+    source_image_id           = optional(string)                            # One of either source_image_id or source_image_reference must be set
     source_image_reference = optional(object({                              # Source Image Reference
       publisher = string                                                    # Image Publisher
       offer     = string                                                    # Image Offer
