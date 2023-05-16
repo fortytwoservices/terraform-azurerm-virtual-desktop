@@ -151,6 +151,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-azuread-join" {
   type                       = "AADLoginForWindows"
   type_handler_version       = "2.0"
   auto_upgrade_minor_version = true
+  tags                       = azurerm_windows_virtual_machine.avd-session-hosts[each.key].tags
 }
 
 ### Conditional deployment of Azure Active Directory Domain Services join
@@ -163,6 +164,7 @@ resource "azurerm_virtual_machine_extension" "avd-session-host-aadds-join" {
   type                       = "JsonADDomainExtension"
   type_handler_version       = "1.3"
   auto_upgrade_minor_version = true
+  tags                       = azurerm_windows_virtual_machine.avd-session-hosts[each.key].tags
 
   settings = <<-SETTINGS
     {
