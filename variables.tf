@@ -8,12 +8,12 @@ variable "shortname" {
 }
 
 variable "env" {
-  description = "What environment the resources are deployed in. Eg. p = prod, t = test, d = dev"
+  description = "What environment the resources are deployed in. Eg. prod, test, dev"
   type        = string
 }
 
 variable "location" {
-  description = "What location the resources should be deployed in. Eg. westeurope, norwayeast"
+  description = "Default location for all resources, unless specified further for any resources. Eg. westeurope, norwayeast"
   type        = string
 }
 
@@ -209,11 +209,11 @@ locals {
 
   # Use this map with the var.env input variable as input, to translate the env to human readable
   env = {
-    p = "Production"
-    d = "Development"
-    t = "Test"
-    q = "QA"
-    s = "Staging"
+    prod  = "Production"
+    dev   = "Development"
+    test  = "Test"
+    qa    = "QA"
+    stage = "Staging"
   }
 
   tags = var.tags == null ? local.default-tags : var.tags
