@@ -85,25 +85,6 @@ resource "azurerm_virtual_desktop_application_group" "avd-application_groups" {
   tags                = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
 }
 
-locals {
-  avd-application-group-users = flatten([
-    for ag in var.avd-application_groups : [
-      for user in ag.avd-users != null ? ag.avd-users : [] : [
-        {
-          ag_key   = ag.name
-          user_key = "${ag.name}-${user}"
-          upn      = user
-        }
-      ]
-    ]
-  ])
-}
-
-data "azuread_user" "avd-application-groups-users" {
-  for_each            = { for user in local.avd-application-group-users : user.user_key => user }
-  user_principal_name = each.value.upn
-}
-
 resource "azurerm_role_assignment" "avd-application-groups-users" {
   for_each             = { for ag in var.avd-application_groups : ag.name => ag }
   scope                = azurerm_virtual_desktop_application_group.avd-application_groups[each.key].id
