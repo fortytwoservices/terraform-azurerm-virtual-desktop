@@ -8,7 +8,7 @@ resource "azurerm_virtual_desktop_workspace" "avd-workspaces" {
   resource_group_name = azurerm_resource_group.avd[each.key].name
   location            = azurerm_resource_group.avd[each.key].location
   friendly_name       = each.value.friendly_name
-  tags                = each.value.tags
+  tags                = each.value.tags != null ? each.value.tags : (var.tags != null ? var.tags : local.tags)
 }
 
 resource "azurerm_virtual_desktop_workspace_application_group_association" "avd-workspace-app_group-association" {
@@ -38,7 +38,7 @@ resource "azurerm_virtual_desktop_host_pool" "avd-host_pools" {
   personal_desktop_assignment_type = each.value.type == "Personal" ? lookup(each.value, "personal_desktop_assignment_type", null) : null
   maximum_sessions_allowed         = lookup(each.value, "maximum_sessions_allowed", null)
   preferred_app_group_type         = lookup(each.value, "preferred_app_group_type", null)
-  tags                             = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
+  tags                             = each.value.tags != null ? each.value.tags : (var.tags != null ? var.tags : local.tags)
 
   dynamic "scheduled_agent_updates" {
     for_each = try(each.value.scheduled_agent_updates, null) != null ? [1] : []
@@ -82,7 +82,7 @@ resource "azurerm_virtual_desktop_application_group" "avd-application_groups" {
   location            = azurerm_resource_group.avd[each.value.workspace_name].location
   type                = each.value.type
   host_pool_id        = azurerm_virtual_desktop_host_pool.avd-host_pools[each.value.host_pool_name].id
-  tags                = lookup(each.value, "tags", null) != null ? each.value.tags : local.tags
+  tags                = each.value.tags != null ? each.value.tags : (var.tags != null ? var.tags : local.tags)
 }
 
 resource "azurerm_role_assignment" "avd-application-groups-users" {
@@ -121,7 +121,7 @@ resource "azurerm_shared_image_gallery" "avd-shared_image_galleries" {
   description         = lookup(each.value, "description", null)
   resource_group_name = azurerm_resource_group.avd-shared_image_galleries[each.key].name
   location            = azurerm_resource_group.avd-shared_image_galleries[each.key].location
-  tags                = lookup(each.value, "tags", local.tags)
+  tags                = each.value.tags != null ? each.value.tags : (var.tags != null ? var.tags : local.tags)
 }
 
 #####################
