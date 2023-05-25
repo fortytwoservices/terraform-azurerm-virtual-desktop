@@ -6,9 +6,9 @@ module "avd1" {
   source = "github.com/amestofortytwo/terraform-azurerm-virtual-desktop.git" # This referes to the latest version of the source repo. It's recommended to specify the release version!
 
   shortname = local.shortname    # Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
-  env                = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
-  location           = var.location       # Default location for resources
-  tags               = local.default-tags # Default tags for resources
+  env       = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
+  location  = var.location       # Default location for resources
+  tags      = local.default-tags # Default tags for resources
 
   avd-workspaces = [                # A list of objects describing one or more AVD Workspaces
     {                               #
