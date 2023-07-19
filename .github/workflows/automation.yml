@@ -14,7 +14,7 @@ jobs:
     name: Add to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0.3.0
+      - uses: actions/add-to-project@31b3f3ccdc584546fc445612dec3f38ff5edb41c # v0.5.0
         with:
           project-url: https://github.com/orgs/amestofortytwo/projects/1
           github-token: ${{ secrets.MARVIN_PAT }}
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Terraform
         run: terraform fmt -check -recursive
 
@@ -34,7 +34,7 @@ jobs:
     if: github.event_name == 'push'
     needs: terraform
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: google-github-actions/release-please-action@8016a6649226f2ec88ed05441c11bb5410a22d29 # v3.7.10
         with:
           token: ${{ secrets.MARVIN_PAT }}
           release-type: terraform-module
