@@ -1,12 +1,14 @@
 name: Automation
 on:
-  issues:
-    types: [ "opened" ]
   pull_request:
     types: [ "opened" ]
   push:
     branches: [ "main" ]
     paths: [ "**.tf"]
+
+permissions:
+  pull-requests: write
+  contents: read
 
 jobs:
   update-readme:
