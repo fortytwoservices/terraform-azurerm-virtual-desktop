@@ -2,7 +2,7 @@ version: ">= 0.15.0"
 
 formatter: markdown
 
-header-from: readme-header.md
+header-from: ""
 footer-from: ""
 
 sections:
