@@ -2,7 +2,7 @@ version: ">= 0.15.0"
 
 formatter: markdown
 
-header-from: ""
+header-from: main.tf
 footer-from: ""
 
 sections:
@@ -47,7 +47,7 @@ output-values:
   from: ""
 
 sort:
-  enabled: false
+  enabled: true
   by: name
 
 settings:
