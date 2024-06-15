@@ -30,3 +30,13 @@ override.tf.json
 
 .terraform.lock.hcl
 *.idea/*
+*.md.tmp
+*.tfvars
+*.tfvars.json
+*tfplan*
+.DS_Store
+.idea
+.terraformrc
+README-generated.md
+crash.*.log
+terraform.rc
