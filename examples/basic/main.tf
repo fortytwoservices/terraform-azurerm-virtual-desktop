@@ -3,7 +3,8 @@
 # Refer to the [documentation](https://github.com/amestofortytwo/terraform-azurerm-virtual-desktop) for all available input parameters.
 
 module "avd1" {
-  source = "github.com/amestofortytwo/terraform-azurerm-virtual-desktop.git" # This referes to the latest version of the source repo. It's recommended to specify the release version!
+  source  = "fortytwoservices/virtual-desktop/azurerm"
+  version = "2.0.1"
 
   shortname = local.shortname    # Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
   env       = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
