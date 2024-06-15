@@ -19,7 +19,7 @@ Which resources, and how many of each depends on your configuration
 - AVD Applications
 - Azure Shared Image Gallery
 - Azure Storage Account for FSLogix
-- Windows Virtual Machines as session hosts. Either joined to Azure AD or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
+- Windows Virtual Machines as session hosts. Either joined to Entra ID or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
 
 Complete list of all Terraform resources deployed is provided at the bottom of this page.
 
@@ -28,6 +28,6 @@ Complete list of all Terraform resources deployed is provided at the bottom of t
 - Azure Virtual Network
 - Azure Subnet
 - Azure Network Security Groups
-- Azure AD Groupsh - Typically for designating AVD Users and Admins
+- Entra ID Groups - Typically for designating AVD Users and Admins
 - Azure Key Vault - Typically for storage of secrets created by the module. Available in module outputs.
 - Azure Active Directory Domain Services
