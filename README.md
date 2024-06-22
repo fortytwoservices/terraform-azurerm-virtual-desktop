@@ -1,19 +1,18 @@
 <!-- BEGIN_TF_DOCS -->
 # Terraform Module - Azure Virtual Desktop
 
-**By Amesto Fortytwo**
-
 ---
 
 This module deploys all resources needed for deploying Azure Virtual Desktop.
 
-### NB!
-
-This module does not currently deploy Azuer Files Share and Files Directory for FSLogix due to a bug in the AzureRM Terraform Provider. This step has to be completed manually in scenarios where FSLogix is needed.
+| :exclamation:  NB! |
+|---|
+| This module does not currently deploy Azure Files Share and Files Directory for FSLogix due to a bug in the AzureRM Terraform Provider. This step has to be completed manually in scenarios where FSLogix is needed. |
 
 ## Resources deployed by this module
 
 Which resources, and how many of each depends on your configuration
+
 - Resource Groups
 - AVD Workspaces
 - AVD Host Pools
@@ -21,26 +20,29 @@ Which resources, and how many of each depends on your configuration
 - AVD Applications
 - Azure Shared Image Gallery
 - Azure Storage Account for FSLogix
-- Windows Virtual Machines as session hosts. Either joined to Azure AD or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
+- Windows Virtual Machines as session hosts. Either joined to Entra ID or Azure Active Directory Domain Services joined. Will be registered to the specified Host Pool
 
-*Complete list of all Terraform resources deployed is provided at the bottom of this page*
+Complete list of all Terraform resources deployed is provided at the bottom of this page.
 
 ## Resources NOT deployed by this module
 
 - Azure Virtual Network
 - Azure Subnet
 - Azure Network Security Groups
-- Azure AD Groupsh - Typically for designating AVD Users and Admins
+- Entra ID Groups - Typically for designating AVD Users and Admins
 - Azure Key Vault - Typically for storage of secrets created by the module. Available in module outputs.
 - Azure Active Directory Domain Services
 
+<!-- markdownlint-disable MD033 -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.56.0 |
+The following requirements are needed by this module:
 
-## Example
+- azurerm (>=3.56.0)
+
+## Examples
+
+### Basic example
 
 ```hcl
 # This example contains a typical, basic deployment of an Azure Virtual Desktop environment.
@@ -48,12 +50,13 @@ Which resources, and how many of each depends on your configuration
 # Refer to the [documentation](https://github.com/amestofortytwo/terraform-azurerm-virtual-desktop) for all available input parameters.
 
 module "avd1" {
-  source = "github.com/amestofortytwo/terraform-azurerm-virtual-desktop.git" # This referes to the latest version of the source repo. It's recommended to specify the release version!
+  source  = "fortytwoservices/virtual-desktop/azurerm"
+  version = "2.0.1"
 
   shortname = local.shortname    # Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
-  env                = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
-  location           = var.location       # Default location for resources
-  tags               = local.default-tags # Default tags for resources
+  env       = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
+  location  = var.location       # Default location for resources
+  tags      = local.default-tags # Default tags for resources
 
   avd-workspaces = [                # A list of objects describing one or more AVD Workspaces
     {                               #
@@ -139,70 +142,305 @@ module "avd1" {
 }
 ```
 
+### Advanced Example
+
+```hcl
+
+```
+
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.56.0 |
+The following providers are used by this module:
+
+- azurerm (>=3.56.0)
+
+## Resources
+
+The following resources are used by this module:
+
+- [azurerm_availability_set.avd-session-host-availability_sets](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/availability_set) (resource)
+- [azurerm_managed_disk.avd-session-host-managed-disks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) (resource)
+- [azurerm_network_interface.avd-session-host-nics](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) (resource)
+- [azurerm_resource_group.avd](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_resource_group.avd-fslogix](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_resource_group.avd-session_hosts](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_resource_group.avd-shared_image_galleries](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_role_assignment.avd-application-groups-users](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.avd-fslogix-smb-share-contributor-avd-users](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.avd-fslogix-smb-share-contributor-tf-deployment-spn](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.avd-virtual-machine-user-login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_shared_image_gallery.avd-shared_image_galleries](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery) (resource)
+- [azurerm_storage_account.avd-fslogix](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
+- [azurerm_storage_account.avd-session-host-sa-boot_diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
+- [azurerm_virtual_desktop_application.avd-applications](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application) (resource)
+- [azurerm_virtual_desktop_application_group.avd-application_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) (resource)
+- [azurerm_virtual_desktop_host_pool.avd-host_pools](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) (resource)
+- [azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) (resource)
+- [azurerm_virtual_desktop_workspace.avd-workspaces](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) (resource)
+- [azurerm_virtual_desktop_workspace_application_group_association.avd-workspace-app_group-association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) (resource)
+- [azurerm_virtual_machine_data_disk_attachment.avd-session-host-managed-disk-attachments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) (resource)
+- [azurerm_virtual_machine_extension.avd-session-host-aadds-join](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) (resource)
+- [azurerm_virtual_machine_extension.avd-session-host-azuread-join](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) (resource)
+- [azurerm_virtual_machine_extension.avd-session-host-registration](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) (resource)
+- [azurerm_windows_virtual_machine.avd-session-hosts](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine) (resource)
+
+<!-- markdownlint-disable MD013 -->
+## Required Inputs
+
+The following input variables are required:
+
+### avd-host\_pools
+
+Description: A list of objects with one object per host pool. See documentation below for values and examples.
+
+Type:
+
+```hcl
+list(object({
+    name                             = string                         # Name of Host Pool
+    friendly_name                    = optional(string)               # Pretty friendly name to be displayed
+    description                      = optional(string)               # Description of the Host Pool
+    workspace_name                   = string                         # Workspace for the Host Pool to be associated with
+    type                             = optional(string, "Pooled")     # Type of Host Pool. Possible values are "Pooled", "Personal". Defaults to "Pooled"
+    load_balancer_type               = optional(string, "DepthFirst") # Load Balancer Type. Possible values are "BreadthFirst", "DepthFirst", "Persistent". "Defaults to "DepthFirst".
+    validate_environment             = optional(bool, true)           # If environment should be validated or not. Defaults to "true"
+    start_vm_on_connect              = optional(bool, false)          # Start VM when it's connected to. Defaults to "false"
+    custom_rdp_properties            = optional(string)               # A string of Custom RDP Properties to be applied to the Host Pool
+    personal_desktop_assignment_type = optional(string, "Automatic")  # Personal Desktop Assignment Type. Possible values are "Automatic" and "Direct". Defaults to "Automatic"
+    maximum_sessions_allowed         = optional(number)               # Maximum number of users that have concurrent sessions on a session host. 0 - 999999. Should only be set if "type = Pooled"
+    preferred_app_group_type         = optional(string)               # Preferred Application Group type for the Host Pool. Valid options are "None", "Desktop", "RailApplications". Defaults to "None"
+    tags                             = optional(map(string))          # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
+    scheduled_agent_updates = optional(object({                       # Block defining Scheduled Agent Updates
+      enabled                   = optional(bool, false)               # If Scheduled Agents Updates should be enabled or not. Defaults to "false"
+      timezone                  = optional(string)                    # Specify timezone for the schedule
+      use_session_host_timezone = optional(bool, true)                # Use the system timezone of the session host. Defaults to "true"
+      schedule = optional(list(object({                               # List of blocks defining schedules
+        day_of_week = string                                          # Specify day of week. Possible values are "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturdai", "Sunday"
+        hour_of_day = number                                          # The hour of day the update window should start. The update is a 2 hour period following the hour provided.
+      })))                                                            # The value should be provided as a number between 0 and 23, with 0 being midnight and 23 being 11pm.
+    }))                                                               #
+    registration_expiration_date = optional(string)                   # The date the registration token should expire. Recommended to use the time_offset resource for this
+  }))
+```
+
+### avd-workspaces
+
+Description: A list of objects with one object per workspace. See documentation below for values and examples.
+
+Type:
+
+```hcl
+list(object({
+    name          = string                # Name of Workspace
+    location      = optional(string)      # Specify location of Workspace, if omitted, default location in main inputs will be used
+    friendly_name = string                # Pretty friendly name to be displayed
+    tags          = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
+  }))
+```
+
+### env
+
+Description: What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
+
+Type: `string`
+
+### location
+
+Description: Default location for all resources, unless specified further for any resources. Eg. westeurope, norwayeast
+
+Type: `string`
+
+## Optional Inputs
+
+The following input variables are optional (have default values):
+
+### avd-application\_groups
+
+Description: A list of objects with one object per application group. See documentation below for values and examples.
+
+Type:
+
+```hcl
+list(object({
+    name                         = string                # Name of Application Group
+    friendly_name                = optional(string)      # Pretty friendly name to be displayed
+    description                  = optional(string)      # Description of the Application Group
+    type                         = string                # Type of Application Group. Possible values are "RemoteApp" or "Desktop"
+    host_pool_name               = string                # Name of Host Pool to be associated with the Application Group
+    workspace_name               = string                # Name of the Workspace to be associated with the Application Group
+    default_desktop_display_name = optional(string)      # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"
+    tags                         = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
+    group-avd-users-object-id    = optional(string)      # Group ID of the Azure AD group that contains the users that should have access to the session hosts
+  }))
+```
+
+Default: `[]`
+
+### avd-applications
+
+Description: A list of objects with one object per application. See documentation below for values and examples.
+
+Type:
+
+```hcl
+list(object({
+    name                         = string           # Name of Application
+    friendly_name                = optional(string) # Pretty friendly name to be displayed
+    description                  = optional(string) # Description of the application
+    application_group_name       = string           # Name of Application Group for the Application to be associated with
+    path                         = string           # The file path location of the app on the Virtual Desktop OS
+    command_line_argument_policy = string           # Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. Possible values are #DoNotAllow", "Allow", "Require"
+    command_line_arguments       = optional(string) # Command Line Arguments for Application
+    show_in_portal               = optional(bool)   # Specifies whether to show the RemoteApp program in the RD Web Access Server. Possible values are "true" or "false"
+    icon_path                    = optional(string) # Specifies the path for an icon which will be used for this Application
+    icon_index                   = optional(string) # The index of the icon you wish to use
+  }))
+```
+
+Default: `[]`
+
+### avd-fslogix
+
+Description: An object describing the storage account and file share for FSLogix
+
+Type:
+
+```hcl
+list(object({
+    name                               = string                          # Name of Storage Account used for FSLogix
+    account_tier                       = optional(string, "Premium")     # Account Tier of the Storage Account. Possible values are "Standard" or "Premium". Defaults to "Premium"
+    account_kind                       = optional(string, "FileStorage") # Storage Account kind. Possible values are "BlobStorage", "BlockBlobStorage", "FileStorage", "Storage", "StorageV2". Defaults to "StorageV2"
+    account_replication_type           = optional(string, "LRS")         # Storage Account Replication Type. Possible values are "LRS", "GRS", "RAGRS", "ZRS", "GZRS", "RAGZRS". Defaults to "LRS"
+    access_tier                        = optional(string, "Hot")         # Storage Account Access Tier. Possible values are "Hot" or "Cool". Defaults to "Hot"
+    azure_share_quota                  = optional(string, "100")         # The maximum size of the share, in gigabytes
+    azure_domain_join_type             = optional(string)                # Allowed values are "AD", "AADKERB", "AADDS". Defaults to "null" and no domain join is performed
+    terraform_deployment_spn_object_id = optional(string)                # Object ID of the Terraform Deployment Service Principal, to assign correct rights to the FSLogix storage account
+    ad_group_avd_users_object_id       = optional(string)                # Object ID of the Azure AD Group containing the AVD Users
+  }))
+```
+
+Default: `[]`
+
+### avd-session-hosts
+
+Description: A list of objects with one object per session host. See documentation below for values and examples.
+
+Type:
+
+```hcl
+list(object({
+    name                      = string                                      # Name of session hosts
+    session_host_count        = number                                      # Number of session hosts
+    group-avd-users-object-id = optional(string)                            # Group ID of the Azure AD group that contains the users that should have access to the session hosts
+    admin_username            = string                                      # Local administrator username
+    admin_password            = string                                      # Local administrator password
+    size                      = string                                      # VM Size SKU for the session hosts
+    timezone                  = optional(string)                            # Specify timezone for the session hosts
+    source_image_id           = optional(string)                            # One of either source_image_id or source_image_reference must be set
+    source_image_reference = optional(object({                              # Source Image Reference
+      publisher = string                                                    # Image Publisher
+      offer     = string                                                    # Image Offer
+      sku       = string                                                    # Image SKU
+      version   = string                                                    # Image Version
+    }))                                                                     #
+    plan = optional(object({                                                # Plan for Microsoft Marketplace image
+      name      = string                                                    # Image Name
+      product   = string                                                    # Image Product
+      publisher = string                                                    # Image Publisher
+    }))                                                                     #
+    os_disk = object({                                                      # Operating System Disk block
+      name                 = optional(string)                               # Name of OS disk
+      caching              = string                                         # Caching Type. Possible values are "None", "ReadOnly", "ReadWrite"
+      storage_account_type = string                                         # Storage Account Type. Possible values are "Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"
+      disk_size_gb         = optional(string)                               # Size of OS Disk in GigaBytes
+    })                                                                      #
+    subnet_id                    = string                                   # Subnet ID for the session hosts to be attached to
+    dns_servers                  = optional(list(string))                   # Specify DNS servers for the session hosts
+    platform_update_domain_count = optional(number)                         # Availability Set Platform Update Domain count
+    platform_fault_domain_count  = optional(number)                         # Availability Set Platform Fault Domain count
+    tags                         = optional(map(string))                    # Map of tags to be set. If omitted, default tags will be applied
+    data_disks = optional(list(object({                                     # Repeatable block for additional data disks
+      name                 = string                                         # Name of Data Disk
+      storage_account_type = optional(string, "Standard_LRS")               # Storage Account Type for Data Disk
+      disk_size_gb         = number                                         # Size of Data Disk in GigaBytes
+      lun                  = number                                         # Unique LUN number for Data Disk
+      caching              = optional(string, "None")                       # Type of Caching for Data Disk. Possible values are "None", "ReadOnly", "ReadWrite"
+    })))                                                                    #
+    azure_domain_join_type                    = optional(string, "azuread") # Allowed values are "azuread" and "aadds"
+    aadds_domain_name                         = optional(string)            # Name of Azure Active Directory Domain Services to join the session hosts to
+    aadds_avd_ou_path                         = optional(string)            # Azure Active Directory Domain Services OU Path
+    azuread_user_dc_admin_upn                 = optional(string)            # DC Admin username
+    azuread_user_dc_admin_password            = optional(string)            # DC Admin password
+    avd_session_host_registration_modules_url = string                      # AVD Session Host registration modules URL
+    host_pool_name                            = string                      # Name of Host Pool for the Session Hosts to be joined to
+  }))
+```
+
+Default: `[]`
+
+### avd-shared-image-gallery
+
+Description: An object describing a Shared Image Gallery resource, if it should be deployed.
+
+Type:
+
+```hcl
+list(object({
+    name        = string                # Name of the Shared Image Gallery
+    description = optional(string)      # Description of the Shared Image Gallery
+    tags        = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied
+  }))
+```
+
+Default: `[]`
+
+### shortname
+
+Description: Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
+
+Type: `string`
+
+Default: `null`
+
+### tags
+
+Description: Tags to be applied to resources. Will be applied to all resources. Sending tags will overwrite the default tags.
+
+Type: `map(string)`
+
+Default: `null`
+
+## Outputs
+
+The following outputs are exported:
+
+### avd-application\_groups
+
+Description: Outputs a list of objects for each Application Group created
+
+### avd-applications
+
+Description: Outputs a list of objects for each Application created
+
+### avd-host\_pool\_registrations
+
+Description: Outputs a list of objects for each Host Pool created
+
+### avd-host\_pools
+
+Description: Outputs a list of objects for each Host Pool created
+
+### avd-session-hosts
+
+Description: Outputs a list of objects for each set of Session Hosts, and each Session Host created
+
+### avd-shared\_image\_galleries
+
+Description: Outputs a list of objects for each Shared Image Gallery created
+
 
 ## Modules
 
 No modules.
 
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_shortname"></a> [shortname](#input\_shortname) | Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft | `string` | `null` | no |
-| <a name="input_env"></a> [env](#input\_env) | What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Default location for all resources, unless specified further for any resources. Eg. westeurope, norwayeast | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied to resources. Will be applied to all resources. Sending tags will overwrite the default tags. | `map(string)` | `null` | no |
-| <a name="input_avd-workspaces"></a> [avd-workspaces](#input\_avd-workspaces) | A list of objects with one object per workspace. See documentation below for values and examples. | <pre>list(object({<br>    name          = string                # Name of Workspace<br>    location      = optional(string)      # Specify location of Workspace, if omitted, default location in main inputs will be used<br>    friendly_name = string                # Pretty friendly name to be displayed<br>    tags          = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied<br>  }))</pre> | n/a | yes |
-| <a name="input_avd-host_pools"></a> [avd-host\_pools](#input\_avd-host\_pools) | A list of objects with one object per host pool. See documentation below for values and examples. | <pre>list(object({<br>    name                             = string                         # Name of Host Pool<br>    friendly_name                    = optional(string)               # Pretty friendly name to be displayed<br>    description                      = optional(string)               # Description of the Host Pool<br>    workspace_name                   = string                         # Workspace for the Host Pool to be associated with<br>    type                             = optional(string, "Pooled")     # Type of Host Pool. Possible values are "Pooled", "Personal". Defaults to "Pooled"<br>    load_balancer_type               = optional(string, "DepthFirst") # Load Balancer Type. Possible values are "BreadthFirst", "DepthFirst", "Persistent". "Defaults to "DepthFirst".<br>    validate_environment             = optional(bool, true)           # If environment should be validated or not. Defaults to "true"<br>    start_vm_on_connect              = optional(bool, false)          # Start VM when it's connected to. Defaults to "false"<br>    custom_rdp_properties            = optional(string)               # A string of Custom RDP Properties to be applied to the Host Pool<br>    personal_desktop_assignment_type = optional(string, "Automatic")  # Personal Desktop Assignment Type. Possible values are "Automatic" and "Direct". Defaults to "Automatic"<br>    maximum_sessions_allowed         = optional(number)               # Maximum number of users that have concurrent sessions on a session host. 0 - 999999. Should only be set if "type = Pooled"<br>    preferred_app_group_type         = optional(string)               # Preferred Application Group type for the Host Pool. Valid options are "None", "Desktop", "RailApplications". Defaults to "None"<br>    tags                             = optional(map(string))          # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied<br>    scheduled_agent_updates = optional(object({                       # Block defining Scheduled Agent Updates<br>      enabled                   = optional(bool, false)               # If Scheduled Agents Updates should be enabled or not. Defaults to "false"<br>      timezone                  = optional(string)                    # Specify timezone for the schedule<br>      use_session_host_timezone = optional(bool, true)                # Use the system timezone of the session host. Defaults to "true"<br>      schedule = optional(list(object({                               # List of blocks defining schedules<br>        day_of_week = string                                          # Specify day of week. Possible values are "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturdai", "Sunday"<br>        hour_of_day = number                                          # The hour of day the update window should start. The update is a 2 hour period following the hour provided.<br>      })))                                                            # The value should be provided as a number between 0 and 23, with 0 being midnight and 23 being 11pm.<br>    }))                                                               #<br>    registration_expiration_date = optional(string)                   # The date the registration token should expire. Recommended to use the time_offset resource for this<br>  }))</pre> | n/a | yes |
-| <a name="input_avd-application_groups"></a> [avd-application\_groups](#input\_avd-application\_groups) | A list of objects with one object per application group. See documentation below for values and examples. | <pre>list(object({<br>    name                         = string                # Name of Application Group<br>    friendly_name                = optional(string)      # Pretty friendly name to be displayed<br>    description                  = optional(string)      # Description of the Application Group<br>    type                         = string                # Type of Application Group. Possible values are "RemoteApp" or "Desktop"<br>    host_pool_name               = string                # Name of Host Pool to be associated with the Application Group<br>    workspace_name               = string                # Name of the Workspace to be associated with the Application Group<br>    default_desktop_display_name = optional(string)      # Optionally set the Display Name for the default sessionDesktop desktop when "type = Desktop"<br>    tags                         = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied<br>    group-avd-users-object-id    = optional(string)      # Group ID of the Azure AD group that contains the users that should have access to the session hosts<br>  }))</pre> | `[]` | no |
-| <a name="input_avd-applications"></a> [avd-applications](#input\_avd-applications) | A list of objects with one object per application. See documentation below for values and examples. | <pre>list(object({<br>    name                         = string           # Name of Application<br>    friendly_name                = optional(string) # Pretty friendly name to be displayed<br>    description                  = optional(string) # Description of the application<br>    application_group_name       = string           # Name of Application Group for the Application to be associated with<br>    path                         = string           # The file path location of the app on the Virtual Desktop OS<br>    command_line_argument_policy = string           # Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. Possible values are #DoNotAllow", "Allow", "Require"<br>    command_line_arguments       = optional(string) # Command Line Arguments for Application<br>    show_in_portal               = optional(bool)   # Specifies whether to show the RemoteApp program in the RD Web Access Server. Possible values are "true" or "false"<br>    icon_path                    = optional(string) # Specifies the path for an icon which will be used for this Application<br>    icon_index                   = optional(string) # The index of the icon you wish to use<br>  }))</pre> | `[]` | no |
-| <a name="input_avd-shared-image-gallery"></a> [avd-shared-image-gallery](#input\_avd-shared-image-gallery) | An object describing a Shared Image Gallery resource, if it should be deployed. | <pre>list(object({<br>    name        = string                # Name of the Shared Image Gallery<br>    description = optional(string)      # Description of the Shared Image Gallery<br>    tags        = optional(map(string)) # Specify tags for the Host Pool. If not set, the main tags input is used. If no tags are set, default tags will be applied<br>  }))</pre> | `[]` | no |
-| <a name="input_avd-fslogix"></a> [avd-fslogix](#input\_avd-fslogix) | An object describing the storage account and file share for FSLogix | <pre>list(object({<br>    name                               = string                          # Name of Storage Account used for FSLogix<br>    account_tier                       = optional(string, "Premium")     # Account Tier of the Storage Account. Possible values are "Standard" or "Premium". Defaults to "Premium"<br>    account_kind                       = optional(string, "FileStorage") # Storage Account kind. Possible values are "BlobStorage", "BlockBlobStorage", "FileStorage", "Storage", "StorageV2". Defaults to "StorageV2"<br>    account_replication_type           = optional(string, "LRS")         # Storage Account Replication Type. Possible values are "LRS", "GRS", "RAGRS", "ZRS", "GZRS", "RAGZRS". Defaults to "LRS"<br>    access_tier                        = optional(string, "Hot")         # Storage Account Access Tier. Possible values are "Hot" or "Cool". Defaults to "Hot"<br>    azure_share_quota                  = optional(string, "100")         # The maximum size of the share, in gigabytes<br>    azure_domain_join_type             = optional(string)                # Allowed values are "AD", "AADKERB", "AADDS". Defaults to "null" and no domain join is performed<br>    terraform_deployment_spn_object_id = optional(string)                # Object ID of the Terraform Deployment Service Principal, to assign correct rights to the FSLogix storage account<br>    ad_group_avd_users_object_id       = optional(string)                # Object ID of the Azure AD Group containing the AVD Users<br>  }))</pre> | `[]` | no |
-| <a name="input_avd-session-hosts"></a> [avd-session-hosts](#input\_avd-session-hosts) | A list of objects with one object per session host. See documentation below for values and examples. | <pre>list(object({<br>    name                      = string                                      # Name of session hosts<br>    session_host_count        = number                                      # Number of session hosts<br>    group-avd-users-object-id = optional(string)                            # Group ID of the Azure AD group that contains the users that should have access to the session hosts<br>    admin_username            = string                                      # Local administrator username<br>    admin_password            = string                                      # Local administrator password<br>    size                      = string                                      # VM Size SKU for the session hosts<br>    timezone                  = optional(string)                            # Specify timezone for the session hosts<br>    source_image_id           = optional(string)                            # One of either source_image_id or source_image_reference must be set<br>    source_image_reference = optional(object({                              # Source Image Reference<br>      publisher = string                                                    # Image Publisher<br>      offer     = string                                                    # Image Offer<br>      sku       = string                                                    # Image SKU<br>      version   = string                                                    # Image Version<br>    }))                                                                     #<br>    plan = optional(object({                                                # Plan for Microsoft Marketplace image<br>      name      = string                                                    # Image Name<br>      product   = string                                                    # Image Product<br>      publisher = string                                                    # Image Publisher<br>    }))                                                                     #<br>    os_disk = object({                                                      # Operating System Disk block<br>      name                 = optional(string)                               # Name of OS disk<br>      caching              = string                                         # Caching Type. Possible values are "None", "ReadOnly", "ReadWrite"<br>      storage_account_type = string                                         # Storage Account Type. Possible values are "Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"<br>      disk_size_gb         = optional(string)                               # Size of OS Disk in GigaBytes<br>    })                                                                      #<br>    subnet_id                    = string                                   # Subnet ID for the session hosts to be attached to<br>    dns_servers                  = optional(list(string))                   # Specify DNS servers for the session hosts<br>    platform_update_domain_count = optional(number)                         # Availability Set Platform Update Domain count<br>    platform_fault_domain_count  = optional(number)                         # Availability Set Platform Fault Domain count<br>    tags                         = optional(map(string))                    # Map of tags to be set. If omitted, default tags will be applied<br>    data_disks = optional(list(object({                                     # Repeatable block for additional data disks<br>      name                 = string                                         # Name of Data Disk<br>      storage_account_type = optional(string, "Standard_LRS")               # Storage Account Type for Data Disk<br>      disk_size_gb         = number                                         # Size of Data Disk in GigaBytes<br>      lun                  = number                                         # Unique LUN number for Data Disk<br>      caching              = optional(string, "None")                       # Type of Caching for Data Disk. Possible values are "None", "ReadOnly", "ReadWrite"<br>    })))                                                                    #<br>    azure_domain_join_type                    = optional(string, "azuread") # Allowed values are "azuread" and "aadds"<br>    aadds_domain_name                         = optional(string)            # Name of Azure Active Directory Domain Services to join the session hosts to<br>    aadds_avd_ou_path                         = optional(string)            # Azure Active Directory Domain Services OU Path<br>    azuread_user_dc_admin_upn                 = optional(string)            # DC Admin username<br>    azuread_user_dc_admin_password            = optional(string)            # DC Admin password<br>    avd_session_host_registration_modules_url = string                      # AVD Session Host registration modules URL<br>    host_pool_name                            = string                      # Name of Host Pool for the Session Hosts to be joined to<br>  }))</pre> | `[]` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_avd-host_pools"></a> [avd-host\_pools](#output\_avd-host\_pools) | Outputs a list of objects for each Host Pool created |
-| <a name="output_avd-host_pool_registrations"></a> [avd-host\_pool\_registrations](#output\_avd-host\_pool\_registrations) | Outputs a list of objects for each Host Pool created |
-| <a name="output_avd-application_groups"></a> [avd-application\_groups](#output\_avd-application\_groups) | Outputs a list of objects for each Application Group created |
-| <a name="output_avd-applications"></a> [avd-applications](#output\_avd-applications) | Outputs a list of objects for each Application created |
-| <a name="output_avd-shared_image_galleries"></a> [avd-shared\_image\_galleries](#output\_avd-shared\_image\_galleries) | Outputs a list of objects for each Shared Image Gallery created |
-| <a name="output_avd-session-hosts"></a> [avd-session-hosts](#output\_avd-session-hosts) | Outputs a list of objects for each set of Session Hosts, and each Session Host created |
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [azurerm_availability_set.avd-session-host-availability_sets](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/availability_set) | resource |
-| [azurerm_managed_disk.avd-session-host-managed-disks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
-| [azurerm_network_interface.avd-session-host-nics](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
-| [azurerm_resource_group.avd](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.avd-fslogix](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.avd-session_hosts](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.avd-shared_image_galleries](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_role_assignment.avd-application-groups-users](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.avd-fslogix-smb-share-contributor-avd-users](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.avd-fslogix-smb-share-contributor-tf-deployment-spn](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.avd-virtual-machine-user-login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_shared_image_gallery.avd-shared_image_galleries](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery) | resource |
-| [azurerm_storage_account.avd-fslogix](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
-| [azurerm_storage_account.avd-session-host-sa-boot_diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
-| [azurerm_virtual_desktop_application.avd-applications](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application) | resource |
-| [azurerm_virtual_desktop_application_group.avd-application_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
-| [azurerm_virtual_desktop_host_pool.avd-host_pools](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
-| [azurerm_virtual_desktop_host_pool_registration_info.avd-host_pool_registrations](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
-| [azurerm_virtual_desktop_workspace.avd-workspaces](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
-| [azurerm_virtual_desktop_workspace_application_group_association.avd-workspace-app_group-association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
-| [azurerm_virtual_machine_data_disk_attachment.avd-session-host-managed-disk-attachments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
-| [azurerm_virtual_machine_extension.avd-session-host-aadds-join](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_virtual_machine_extension.avd-session-host-azuread-join](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_virtual_machine_extension.avd-session-host-registration](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_windows_virtual_machine.avd-session-hosts](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine) | resource |
 <!-- END_TF_DOCS -->
