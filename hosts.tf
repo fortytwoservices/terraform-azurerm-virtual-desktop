@@ -36,6 +36,7 @@ resource "azurerm_storage_account" "avd-session-host-sa-boot_diagnostics" {
   location                 = azurerm_resource_group.avd-session_hosts[each.key].location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  min_tls_version          = "TLS1_2"
   tags                     = each.value.tags != null ? each.value.tags : (var.tags != null ? var.tags : local.tags)
 }
 
