@@ -138,6 +138,7 @@ resource "azurerm_storage_account" "avd-fslogix" {
   account_kind             = each.value.account_kind
   account_replication_type = each.value.account_replication_type
   access_tier              = each.value.access_tier
+  min_tls_version          = "TLS1_2"
 
   dynamic "azure_files_authentication" {
     for_each = each.value.azure_domain_join_type != null ? [1] : []
