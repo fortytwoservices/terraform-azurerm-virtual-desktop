@@ -38,7 +38,7 @@ Complete list of all Terraform resources deployed is provided at the bottom of t
 
 The following requirements are needed by this module:
 
-- azurerm (>=3.56.0)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>=3.56.0)
 
 ## Examples
 
@@ -152,7 +152,7 @@ module "avd1" {
 
 The following providers are used by this module:
 
-- azurerm (>=3.56.0)
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>=3.56.0)
 
 ## Resources
 
@@ -189,7 +189,7 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### avd-host\_pools
+### <a name="input_avd-host_pools"></a> [avd-host\_pools](#input\_avd-host\_pools)
 
 Description: A list of objects with one object per host pool. See documentation below for values and examples.
 
@@ -223,7 +223,7 @@ list(object({
   }))
 ```
 
-### avd-workspaces
+### <a name="input_avd-workspaces"></a> [avd-workspaces](#input\_avd-workspaces)
 
 Description: A list of objects with one object per workspace. See documentation below for values and examples.
 
@@ -238,13 +238,13 @@ list(object({
   }))
 ```
 
-### env
+### <a name="input_env"></a> [env](#input\_env)
 
 Description: What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
 
 Type: `string`
 
-### location
+### <a name="input_location"></a> [location](#input\_location)
 
 Description: Default location for all resources, unless specified further for any resources. Eg. westeurope, norwayeast
 
@@ -254,7 +254,7 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### avd-application\_groups
+### <a name="input_avd-application_groups"></a> [avd-application\_groups](#input\_avd-application\_groups)
 
 Description: A list of objects with one object per application group. See documentation below for values and examples.
 
@@ -276,7 +276,7 @@ list(object({
 
 Default: `[]`
 
-### avd-applications
+### <a name="input_avd-applications"></a> [avd-applications](#input\_avd-applications)
 
 Description: A list of objects with one object per application. See documentation below for values and examples.
 
@@ -299,7 +299,7 @@ list(object({
 
 Default: `[]`
 
-### avd-fslogix
+### <a name="input_avd-fslogix"></a> [avd-fslogix](#input\_avd-fslogix)
 
 Description: An object describing the storage account and file share for FSLogix
 
@@ -321,7 +321,7 @@ list(object({
 
 Default: `[]`
 
-### avd-session-hosts
+### <a name="input_avd-session-hosts"></a> [avd-session-hosts](#input\_avd-session-hosts)
 
 Description: A list of objects with one object per session host. See documentation below for values and examples.
 
@@ -378,7 +378,7 @@ list(object({
 
 Default: `[]`
 
-### avd-shared-image-gallery
+### <a name="input_avd-shared-image-gallery"></a> [avd-shared-image-gallery](#input\_avd-shared-image-gallery)
 
 Description: An object describing a Shared Image Gallery resource, if it should be deployed.
 
@@ -394,7 +394,7 @@ list(object({
 
 Default: `[]`
 
-### shortname
+### <a name="input_shortname"></a> [shortname](#input\_shortname)
 
 Description: Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
 
@@ -402,7 +402,7 @@ Type: `string`
 
 Default: `null`
 
-### tags
+### <a name="input_tags"></a> [tags](#input\_tags)
 
 Description: Tags to be applied to resources. Will be applied to all resources. Sending tags will overwrite the default tags.
 
@@ -414,30 +414,29 @@ Default: `null`
 
 The following outputs are exported:
 
-### avd-application\_groups
+### <a name="output_avd-application_groups"></a> [avd-application\_groups](#output\_avd-application\_groups)
 
 Description: Outputs a list of objects for each Application Group created
 
-### avd-applications
+### <a name="output_avd-applications"></a> [avd-applications](#output\_avd-applications)
 
 Description: Outputs a list of objects for each Application created
 
-### avd-host\_pool\_registrations
+### <a name="output_avd-host_pool_registrations"></a> [avd-host\_pool\_registrations](#output\_avd-host\_pool\_registrations)
 
 Description: Outputs a list of objects for each Host Pool created
 
-### avd-host\_pools
+### <a name="output_avd-host_pools"></a> [avd-host\_pools](#output\_avd-host\_pools)
 
 Description: Outputs a list of objects for each Host Pool created
 
-### avd-session-hosts
+### <a name="output_avd-session-hosts"></a> [avd-session-hosts](#output\_avd-session-hosts)
 
 Description: Outputs a list of objects for each set of Session Hosts, and each Session Host created
 
-### avd-shared\_image\_galleries
+### <a name="output_avd-shared_image_galleries"></a> [avd-shared\_image\_galleries](#output\_avd-shared\_image\_galleries)
 
 Description: Outputs a list of objects for each Shared Image Gallery created
-
 
 ## Modules
 
