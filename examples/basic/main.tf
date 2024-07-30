@@ -4,7 +4,7 @@
 
 module "avd1" {
   source  = "fortytwoservices/virtual-desktop/azurerm"
-  version = "2.0.1"
+  version = "2.1.0"
 
   shortname = local.shortname    # Shortname appended to the beginning of all resources. Ommit this to not append this prefix to all resource names. Eg: Fortytwo would be ft
   env       = "dev"              # What environment the resources are deployed in. Expected values: p, prod, d, dev, t, test, q, qa, s, stage
