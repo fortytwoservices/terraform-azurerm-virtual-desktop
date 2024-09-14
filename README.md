@@ -38,6 +38,8 @@ Complete list of all Terraform resources deployed is provided at the bottom of t
 
 The following requirements are needed by this module:
 
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.0.0)
+
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>=3.56.0)
 
 ## Examples
@@ -47,7 +49,7 @@ The following requirements are needed by this module:
 ```hcl
 # This example contains a typical, basic deployment of an Azure Virtual Desktop environment.
 # Most of the parameters and inputs are left to their default values, as they are typically the correct values in a common deployment.
-# Refer to the [documentation](https://github.com/amestofortytwo/terraform-azurerm-virtual-desktop) for all available input parameters.
+# Refer to the [documentation](https://github.com/fortytwoservices/terraform-azurerm-virtual-desktop) for all available input parameters.
 
 module "avd1" {
   source  = "fortytwoservices/virtual-desktop/azurerm"
