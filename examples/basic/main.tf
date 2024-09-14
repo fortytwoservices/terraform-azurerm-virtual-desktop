@@ -1,6 +1,6 @@
 # This example contains a typical, basic deployment of an Azure Virtual Desktop environment.
 # Most of the parameters and inputs are left to their default values, as they are typically the correct values in a common deployment.
-# Refer to the [documentation](https://github.com/amestofortytwo/terraform-azurerm-virtual-desktop) for all available input parameters.
+# Refer to the [documentation](https://github.com/fortytwoservices/terraform-azurerm-virtual-desktop) for all available input parameters.
 
 module "avd1" {
   source  = "fortytwoservices/virtual-desktop/azurerm"
