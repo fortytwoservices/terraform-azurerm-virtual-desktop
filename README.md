@@ -6,12 +6,12 @@
 
 This module deploys all resources needed for deploying Azure Virtual Desktop.
 
-| :exclamation:  NB! |
-|---|
+| :exclamation: NB!                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Due to the renaming of Company, the Github organization has changed name from "amestofortytwo" to "fortytwoservices". Pre-existing Terraform code would need to change that in code. |
 
-| :exclamation:  NB! |
-|---|
+| :exclamation: NB!                                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | This module does not currently deploy Azure Files Share and Files Directory for FSLogix due to a bug in the AzureRM Terraform Provider. This step has to be completed manually in scenarios where FSLogix is needed. |
 
 ## Resources deployed by this module
