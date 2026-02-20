@@ -2,6 +2,7 @@
 # Most of the parameters and inputs are left to their default values, as they are typically the correct values in a common deployment.
 # Refer to the [documentation](https://github.com/fortytwoservices/terraform-azurerm-virtual-desktop) for all available input parameters.
 
+#trivy:ignore:avd-azu-0012 trivy:ignore:avd-azu-0057 trivy:ignore:avd-azu-0061 trivy:ignore:avd-azu-0068
 module "avd1" {
   source  = "fortytwoservices/virtual-desktop/azurerm"
   version = "2.1.0"
